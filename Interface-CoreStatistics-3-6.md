@@ -1,0 +1,472 @@
+Title: openSIPS | Documentation / Core Statistics
+
+URL Source: https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6
+
+Markdown Content:
+##### Documentation -\> [Manuals](https://www.opensips.org/Documentation/Manuals "Manuals") -\> [Manual devel](https://www.opensips.org/Documentation/Manual-3-6 "OpenSIPS Manual - 3.6") -\> Core Statistics
+
+* * *
+
+Pages for other versions: devel [3.5](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-5 "Core Statistics - 3.5") [3.4](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-4 "Core Statistics - 3.4") Older versions: [3.3](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-3 "Core Statistics - 3.3") [3.2](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-2 "Core Statistics - 3.2") [3.1](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-1 "Core Statistics - 3.1") [3.0](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-0 "Core Statistics - 3.0") [2.4](https://www.opensips.org/Documentation/Interface-CoreStatistics-2-4 "Core Statistics - 2.4") [2.3](https://www.opensips.org/Documentation/Interface-CoreStatistics-2-3 "Core Statistics - devel") [2.2](https://www.opensips.org/Documentation/Interface-CoreStatistics-2-2 "Core Statistics - 2.2") [2.1](https://www.opensips.org/Documentation/Interface-CoreStatistics-2-1 "Core Statistics - devel") [1.11](https://www.opensips.org/Documentation/Interface-CoreStatistics-1-11 "Core Statistics - 1.11") [1.10](https://www.opensips.org/Documentation/Interface-CoreStatistics-1-10 "Core Statistics - ver 1.10") [1.9](https://www.opensips.org/Documentation/Interface-CoreStatistics-1-9 "Core Statistics - ver 1.9") [1.8](https://www.opensips.org/Documentation/Interface-CoreStatistics-1-8 "Core Statistics - ver 1.8") [1.7](https://www.opensips.org/Documentation/Interface-CoreStatistics-1-7 "Core Statistics - ver 1.7") [1.6](https://www.opensips.org/Documentation/Interface-CoreStatistics-1-6 "Core Statistics - ver 1.6") [1.5](https://www.opensips.org/Documentation/Interface-CoreStatistics-1-5 "Core Statistics - ver 1.5") [1.4](https://www.opensips.org/Documentation/Interface-CoreStatistics-1-4 "Core Statistics - ver 1.4")
+
+**Core Statistics v3.6**
+
+* * *
+
+**Table of Content** (hide)
+
+1.  1. ["CORE" class](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc1)
+    1.  1.1 [rcv\_requests](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc2)
+    2.  1.2 [rcv\_replies](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc3)
+    3.  1.3 [fwd\_requests](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc4)
+    4.  1.4 [fwd\_replies](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc5)
+    5.  1.5 [drop\_requests](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc6)
+    6.  1.6 [drop\_replies](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc7)
+    7.  1.7 [err\_requests](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc8)
+    8.  1.8 [err\_replies](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc9)
+    9.  1.9 [bad\_URIs\_rcvd](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc10)
+    10.  1.10 [bad\_msg\_hdr](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc11)
+    11.  1.11 [timestamp](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc12)
+2.  2. ["LOAD" class](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc13)
+    1.  2.1 [load](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc14)
+    2.  2.2 [load1m](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc15)
+    3.  2.3 [load10m](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc16)
+    4.  2.4 [load-all](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc17)
+    5.  2.5 [load1m-all](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc18)
+    6.  2.6 [load10m-all](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc19)
+    7.  2.7 [load-proc-id](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc20)
+    8.  2.8 [load1m-proc-id](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc21)
+    9.  2.9 [load10m-proc-id](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc22)
+3.  3. ["NET" class](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc23)
+    1.  3.1 [waiting\_udp](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc24)
+    2.  3.2 [waiting\_tcp](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc25)
+    3.  3.3 [waiting\_tls](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc26)
+4.  4. ["SHMEM" class](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc27)
+    1.  4.1 [total\_size](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc28)
+    2.  4.2 [used\_size](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc29)
+    3.  4.3 [real\_used\_size](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc30)
+    4.  4.4 [max\_used\_size](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc31)
+    5.  4.5 [free\_size](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc32)
+    6.  4.6 [fragments](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc33)
+5.  5. ["PKMEM" class](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc34)
+    1.  5.1 [N-total\_size](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc35)
+    2.  5.2 [N-used\_size](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc36)
+    3.  5.3 [N-real\_used\_size](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc37)
+    4.  5.4 [N-max\_used\_size](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc38)
+    5.  5.5 [N-free\_size](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc39)
+    6.  5.6 [N-fragments](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#toc40)
+
+The **OpenSIPS** core exports several statistics, which are grouped into **classes**. To view all statistics which correspond to a class, fetch the "class:" statistic (e.g. **opensips-cli -x mi get\_statistics load: core: shmem:**)
+
+* * *
+
+### 1.  "CORE" class
+
+#### 1.1 rcv\_requests
+
+Returns the total number of received requests by OpenSIPS.
+
+Example of usage through MI FIFO
+
+opensips-cli -x mi get\_statistics rcv\_requests
+
+Example of usage from script
+
+xlog("Total number of received requests = $stat(rcv\_requests) \\n");
+
+#### 1.2 rcv\_replies
+
+Returns the total number of received replies by OpenSIPS.
+
+Example of usage through MI FIFO
+
+opensips-cli -x mi get\_statistics rcv\_replies
+
+Example of usage from script
+
+xlog("Total number of received replies = $stat(rcv\_replies) \\n");
+
+#### 1.3 fwd\_requests
+
+Returns the number of stateless forwarded requests by OpenSIPS.
+
+Example of usage through MI FIFO
+
+opensips-cli -x mi get\_statistics fwd\_requests
+
+Example of usage from script
+
+xlog("Total number of forwarded requests = $stat(fwd\_requests) \\n");
+
+#### 1.4 fwd\_replies
+
+Returns the number of stateless forwarded replies by OpenSIPS.
+
+Example of usage through MI FIFO
+
+opensips-cli -x mi get\_statistics fwd\_replies
+
+Example of usage from script
+
+xlog("Total number of forwarded replies = $stat(fwd\_replies) \\n");
+
+#### 1.5 drop\_requests
+
+Returns the number of requests dropped even before entering the script routing logic.
+
+Example of usage through MI FIFO
+
+opensips-cli -x mi get\_statistics drop\_requests
+
+Example of usage from script
+
+xlog("Total number of dropped requests = $stat(drop\_requests) \\n");
+
+#### 1.6 drop\_replies
+
+Returns the number of replies dropped even before entering the script routing logic, or explicitly dropped in the onreply\_route.
+
+Example of usage through MI FIFO
+
+opensips-cli -x mi get\_statistics drop\_replies
+
+Example of usage from script
+
+xlog("Total number of dropped replies = $stat(drop\_replies) \\n");
+
+#### 1.7 err\_requests
+
+Returns the number of bogus requests from SIP point of view ( eg. : No VIA header found )
+
+Example of usage through MI FIFO
+
+opensips-cli -x mi get\_statistics err\_requests
+
+Example of usage from script
+
+xlog("Total number of error requests = $stat(err\_requests) \\n");
+
+#### 1.8 err\_replies
+
+Returns the number of bogus replies from SIP point of view ( eg. : No VIA header found )
+
+Example of usage through MI FIFO
+
+opensips-cli -x mi get\_statistics err\_replies
+
+Example of usage from script
+
+xlog("Total number of error replies = $stat(err\_replies) \\n");
+
+#### 1.9 bad\_URIs\_rcvd
+
+Returns the number of URIs that OpenSIPS failed to parse.
+
+Example of usage through MI FIFO
+
+opensips-cli -x mi get\_statistics bad\_URIs\_rcvd
+
+Example of usage from script
+
+xlog("Total number of bad URIs detected = $stat(bad\_URIs\_rcvd) \\n");
+
+Example of usage from script
+
+xlog("Total number of unsupported methods detected = $stat(unsupported\_methods) \\n");
+
+#### 1.10 bad\_msg\_hdr
+
+Returns the number of SIP headers that OpenSIPS failed to parse.
+
+Example of usage through MI FIFO
+
+opensips-cli -x mi get\_statistics bad\_msg\_hdr
+
+Example of usage from script
+
+xlog("Total number of headers that failed to parse = $stat(bad\_msg\_hdr) \\n");
+
+#### 1.11 timestamp
+
+Returns the number of seconds elapsed from OpenSIPS starting.
+
+Example of usage through MI FIFO
+
+opensips-cli -x mi get\_statistics timestamp
+
+Example of usage from script
+
+xlog("OpenSIPS has been alive for $stat(timestamp) seconds \\n");
+
+* * *
+
+### 2.  "LOAD" class
+
+Statistics giving information about the OpenSIPS internal load. The load is defined as percentage of time spent in doing processing versus total time. Following the model of "top", there are three load values, calculated over different periods of time:
+
+*   realtime load - calculated over the last 1 second
+*   last minute load - calculated over the last 1 minute
+*   last 10 minutes load - calculated over the last 10 minutes
+
+All three load values are provided by OpenSIPS in a per-process manner (the load of each process) and globally (covering all processes).
+
+#### 2.1 load [¶](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#load)
+
+The realtime load of entire OpenSIPS - this counts all the core processes of OpenSIPS; the additional processes requested by modules are not counted in this load. Also note that some core processes are not counted as they do not generate any kind of load; such processes are the attendant, the time keeper and the timer trigger. This statistic is actually reflecting the load generated by processing the SIP traffic (as only the core active processes are counted).
+
+Example of usage through MI FIFO
+
+opensips-cli -x mi get\_statistics load
+load:load:: 24
+
+Example of usage from script
+
+xlog("The OpenSIPS processing load is $stat(load) \\n");
+
+#### 2.2 load1m [¶](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#load1m)
+
+The last minute average load of core OpenSIPS (covering only core/SIP processes). For more, see [load](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#load).
+
+#### 2.3 load10m [¶](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#load10m)
+
+The last 10 minutes average load of core OpenSIPS (covering only core/SIP processes). For more, see [load](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#load).
+
+#### 2.4 load-all [¶](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#load-all)
+
+The realtime load of entire OpenSIPS, counting both core and module processes. Similar to \[\[#load|load\], the processes not generating load at all are not counted.
+
+Example of usage through MI FIFO
+
+opensips-cli -x mi get\_statistics load-all
+load:load-all:: 24
+
+Example of usage from script
+
+xlog("The overall OpenSIPS load is $stat(load-all) \\n");
+
+#### 2.5 load1m-all [¶](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#load1m-all)
+
+The last minute average load of entire OpenSIPS (covering all processes). For more, see [load-all](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#load-all).
+
+#### 2.6 load10m-all [¶](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#load10m-all)
+
+The last 10 minutes average load of entire OpenSIPS (covering all processes). For more, see [load-all](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#load-all).
+
+#### 2.7 load-proc-id [¶](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#load-proc-id)
+
+The realtime load of the process **ID**. To learn the IDs of the OpenSIPS processes (and their types), use the **ps** MI command.
+
+Example of usage through MI FIFO
+
+opensips-cli -x mi get\_statistics load-proc-5
+load:load-proc-5:: 79
+
+Example of usage from script
+
+xlog("The load of processes 5 is $stat(load-proc-5) \\n");
+
+#### 2.8 load1m-proc-id [¶](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#load1m-proc-id)
+
+The last minute average load of the process **ID**. For more, see [load-proc-id](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#load-proc-id).
+
+#### 2.9 load10m-proc-id [¶](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#load10m-proc-id)
+
+The last 10 minutes average load of the process **ID**. For more, see [load-proc-id](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6#load-proc-id).
+
+* * *
+
+### 3.  "NET" class
+
+Statistics giving information about UDP, TCP and TLS buffers on interfaces that OpenSIPS is listening on.
+
+#### 3.1 waiting\_udp
+
+Returns the number of bytes waiting to be consumed on UDP interfaces that OpenSIPS is listening on.
+
+Example of usage through MI FIFO
+
+opensips-cli -x mi get\_statistics waiting\_udp
+
+Example of usage from script
+
+xlog("The UDP waiting buffer size is $stat(waiting\_udp) \\n");
+
+#### 3.2 waiting\_tcp
+
+Returns the number of bytes waiting to be consumed on TCP interfaces that OpenSIPS is listening on.
+
+Example of usage through MI FIFO
+
+opensips-cli -x mi get\_statistics waiting\_tcp
+
+Example of usage from script
+
+xlog("The TCP waiting buffer size is $stat(waiting\_tcp) \\n");
+
+#### 3.3 waiting\_tls
+
+Returns the number of bytes waiting to be consumed on TLS interfaces that OpenSIPS is listening on.
+
+Example of usage through MI FIFO
+
+opensips-cli -x mi get\_statistics waiting\_tls
+
+Example of usage from script
+
+xlog("The TLS waiting buffer size is $stat(waiting\_tls) \\n");
+
+* * *
+
+### 4.  "SHMEM" class
+
+Statistics giving information on the shared memory that OpenSIPS is using.
+
+#### 4.1 total\_size
+
+Returns the total size of shared memory available to OpenSIPS processes.
+
+Example of usage through MI FIFO
+
+opensips-cli -x mi get\_statistics total\_size
+
+Example of usage from script
+
+xlog("Total size of SHMEM available is $stat(total\_size) \\n");
+
+#### 4.2 used\_size
+
+Returns the amount of shared memory requested and used by OpenSIPS processes.
+
+Example of usage through MI FIFO
+
+opensips-cli -x mi get\_statistics used\_size
+
+Example of usage from script
+
+xlog("SHMEM in use = $stat(used\_size) \\n");
+
+#### 4.3 real\_used\_size
+
+Returns the amount of shared memory requested by OpenSIPS processes + malloc overhead
+
+Example of usage through MI FIFO
+
+opensips-cli -x mi get\_statistics real\_used\_size
+
+Example of usage from script
+
+xlog("Real SHMEM used size is $stat(real\_used\_size) \\n");
+
+#### 4.4 max\_used\_size
+
+Returns the maximum amount of shared memory ever used by OpenSIPS processes.
+
+Example of usage through MI FIFO
+
+opensips-cli -x mi get\_statistics max\_used\_size
+
+Example of usage from script
+
+xlog("The max SHMEM ever used is $stat(max\_used\_size) \\n");
+
+#### 4.5 free\_size
+
+Returns the free memory available. Computed as total\_size - real\_used\_size
+
+Example of usage through MI FIFO
+
+opensips-cli -x mi get\_statistics free\_size
+
+Example of usage from script
+
+xlog("Free SHMEM available is $stat(free\_size) \\n");
+
+#### 4.6 fragments
+
+Returns the total number of fragments in the shared memory.
+
+Example of usage through MI FIFO
+
+opensips-cli -x mi get\_statistics fragments
+
+Example of usage from script
+
+xlog("The total number of SHMEM fragments is $stat(fragments) \\n");
+
+* * *
+
+### 5.  "PKMEM" class
+
+Various private memory related statistics for each OpenSIPS process. Each "PKMEM" statistic is prefixed by a number, representing the index of an OpenSIPS process (0, 1, ...).
+
+#### 5.1 N-total\_size
+
+Returns the total size of private memory available to OpenSIPS process #N.
+
+Example of usage through MI FIFO
+
+opensips-cli -x mi get\_statistics 0-total\_size
+
+Example of usage from script
+
+xlog("Total size of PKG memory available for process #0 is $stat(0-total\_size) \\n");
+
+#### 5.2 N-used\_size
+
+Returns the amount of private memory requested and used by OpenSIPS process #N.
+
+Example of usage through MI FIFO
+
+opensips-cli -x mi get\_statistics 0-used\_size
+
+Example of usage from script
+
+xlog("PKG mem in use for process #1 = $stat(1-used\_size) \\n");
+
+#### 5.3 N-real\_used\_size
+
+Returns the amount of private memory requested by OpenSIPS process #N, including allocator-specific metadata
+
+Example of usage through MI FIFO
+
+opensips-cli -x mi get\_statistics 0-real\_used\_size
+
+Example of usage from script
+
+xlog("Process #0 actually uses $stat(0-real\_used\_size) bytes of private memory\\n");
+
+#### 5.4 N-max\_used\_size
+
+Returns the maximum amount of private memory ever used by OpenSIPS process #N.
+
+Example of usage through MI FIFO
+
+opensips-cli -x mi get\_statistics 0-max\_used\_size
+
+Example of usage from script
+
+xlog("The max PKG memory ever used for process #0 is $stat(0-max\_used\_size) \\n");
+
+#### 5.5 N-free\_size
+
+Returns the free private memory available for OpenSIPS process #N. Computed as total\_size - real\_used\_size
+
+Example of usage through MI FIFO
+
+opensips-cli -x mi get\_statistics 0-free\_size
+
+Example of usage from script
+
+xlog("Free PKG memory available for process #0 is $stat(0-free\_size) \\n");
+
+#### 5.6 N-fragments
+
+Returns the currently available number of free fragments in the private memory for OpenSIPS process #N.
+
+Example of usage through MI FIFO
+
+opensips-cli -x mi get\_statistics 0-fragments
+
+Example of usage from script
+
+xlog("The total number of PKG fragments is $stat(0-fragments) \\n");

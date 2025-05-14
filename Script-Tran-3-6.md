@@ -1,0 +1,872 @@
+Title: openSIPS | Documentation / Script Transformations
+
+URL Source: https://www.opensips.org/Documentation/Script-Tran-3-6
+
+Markdown Content:
+##### Documentation -\> [Manuals](https://www.opensips.org/Documentation/Manuals "Manuals") -\> [Manual devel](https://www.opensips.org/Documentation/Manual-3-6 "OpenSIPS Manual - 3.6") -\> Script Transformations
+
+* * *
+
+Pages for other versions: devel [3.5](https://www.opensips.org/Documentation/Script-Tran-3-5 "Script Transformations - 3.5") [3.4](https://www.opensips.org/Documentation/Script-Tran-3-4 "Script Transformations - 3.4") Older versions: [3.3](https://www.opensips.org/Documentation/Script-Tran-3-3 "Script Transformations - 3.3") [3.2](https://www.opensips.org/Documentation/Script-Tran-3-2 "Script Transformations - 3.2") [3.1](https://www.opensips.org/Documentation/Script-Tran-3-1 "Script Transformations - 3.1") [3.0](https://www.opensips.org/Documentation/Script-Tran-3-0 "Script Transformations - 3.0") [2.4](https://www.opensips.org/Documentation/Script-Tran-2-4 "Script Transformations - 2.4") [2.3](https://www.opensips.org/Documentation/Script-Tran-2-3 "Script Transformations - 2.3") [2.2](https://www.opensips.org/Documentation/Script-Tran-2-2 "Script Transformations - 2.2") [2.1](https://www.opensips.org/Documentation/Script-Tran-2-1 "Script Transformations - 2.1") [1.11](https://www.opensips.org/Documentation/Script-Tran-1-11 "Script Transformations - ver 1.11") [1.10](https://www.opensips.org/Documentation/Script-Tran-1-10 "Script Transformations - ver 1.10") [1.9](https://www.opensips.org/Documentation/Script-Tran-1-9 "Script Transformations - ver 1.9") [1.8](https://www.opensips.org/Documentation/Script-Tran-1-8 "Script Transformations - ver 1.8") [1.7](https://www.opensips.org/Documentation/Script-Tran-1-7 "Script Transformations - ver 1.7") [1.6](https://www.opensips.org/Documentation/Script-Tran-1-6 "Script Transformations - ver 1.6") [1.5](https://www.opensips.org/Documentation/Script-Tran-1-5 "Script Transformations - ver 1.5") [1.4](https://www.opensips.org/Documentation/Script-Tran-1-4 "Script Transformations - ver 1.4")
+
+**Script Transformations v3.6**
+
+* * *
+
+**Table of Content** (hide)
+
+1.  1. [String Transformations](https://www.opensips.org/Documentation/Script-Tran-3-6#toc1)
+    1.  1.1 [{s.len}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc2)
+    2.  1.2 [{s.int}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc3)
+    3.  1.3 [{s.md5}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc4)
+    4.  1.4 [{s.reverse}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc5)
+    5.  1.5 [{s.substr,offset,length}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc6)
+    6.  1.6 [{s.select,index,separator}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc7)
+    7.  1.7 [{s.encode.hexa}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc8)
+    8.  1.8 [{s.decode.hexa}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc9)
+    9.  1.9 [{s.escape.common}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc10)
+    10.  1.10 [{s.unescape.common}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc11)
+    11.  1.11 [{s.escape.user}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc12)
+    12.  1.12 [{s.unescape.user}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc13)
+    13.  1.13 [{s.escape.param}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc14)
+    14.  1.14 [{s.unescape.param}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc15)
+    15.  1.15 [{s.tolower}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc16)
+    16.  1.16 [{s.toupper}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc17)
+    17.  1.17 [{s.index}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc18)
+    18.  1.18 [{s.rindex}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc19)
+    19.  1.19 [{s.fill.left, tok, len}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc20)
+    20.  1.20 [{s.fill.right, tok, len}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc21)
+    21.  1.21 [{s.width, len}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc22)
+    22.  1.22 [{s.trim}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc23)
+    23.  1.23 [{s.trimr}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc24)
+    24.  1.24 [{s.triml}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc25)
+    25.  1.25 [{s.dec2hex}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc26)
+    26.  1.26 [{s.hex2dec}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc27)
+    27.  1.27 [{s.b64encode}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc28)
+    28.  1.28 [{s.b64decode}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc29)
+    29.  1.29 [{s.xor,secret}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc30)
+    30.  1.30 [{s.eval}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc31)
+    31.  1.31 [{s.date2unix}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc32)
+    32.  1.32 [{s.sha1}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc33)
+    33.  1.33 [{s.sha224}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc34)
+    34.  1.34 [{s.sha256}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc35)
+    35.  1.35 [{s.sha384}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc36)
+    36.  1.36 [{s.sha512}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc37)
+    37.  1.37 [{s.sha1\_hmac,key}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc38)
+    38.  1.38 [{s.sha224\_hmac,key}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc39)
+    39.  1.39 [{s.sha256\_hmac,key}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc40)
+    40.  1.40 [{s.sha384\_hmac,key}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc41)
+    41.  1.41 [{s.sha512\_hmac,key}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc42)
+2.  2. [URI Transformations](https://www.opensips.org/Documentation/Script-Tran-3-6#toc43)
+    1.  2.1 [{uri.user}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc44)
+    2.  2.2 [{uri.host}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc45)
+    3.  2.3 [{uri.passwd}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc46)
+    4.  2.4 [{uri.port}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc47)
+    5.  2.5 [{uri.params}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc48)
+    6.  2.6 [{uri.param,name}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc49)
+    7.  2.7 [{uri.headers}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc50)
+    8.  2.8 [{uri.transport}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc51)
+    9.  2.9 [{uri.ttl}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc52)
+    10.  2.10 [{uri.uparam}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc53)
+    11.  2.11 [{uri.maddr}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc54)
+    12.  2.12 [{uri.method}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc55)
+    13.  2.13 [{uri.lr}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc56)
+    14.  2.14 [{uri.r2}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc57)
+    15.  2.15 [{uri.schema}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc58)
+3.  3. [VIA Transformations](https://www.opensips.org/Documentation/Script-Tran-3-6#toc59)
+    1.  3.1 [{via.name}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc60)
+    2.  3.2 [{via.version}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc61)
+    3.  3.3 [{via.transport}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc62)
+    4.  3.4 [{via.host}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc63)
+    5.  3.5 [{via.port}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc64)
+    6.  3.6 [{via.comment}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc65)
+    7.  3.7 [{via.params}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc66)
+    8.  3.8 [{via.param,name}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc67)
+    9.  3.9 [{via.branch}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc68)
+    10.  3.10 [{via.received}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc69)
+    11.  3.11 [{via.rport}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc70)
+4.  4. [Parameters List Transformations](https://www.opensips.org/Documentation/Script-Tran-3-6#toc71)
+    1.  4.1 [{param.value,name}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc72)
+    2.  4.2 [{param.exist,name}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc73)
+    3.  4.3 [{param.valueat,index}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc74)
+    4.  4.4 [{param.name,index}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc75)
+    5.  4.5 [{param.count}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc76)
+5.  5. [Name-address Transformations](https://www.opensips.org/Documentation/Script-Tran-3-6#toc77)
+    1.  5.1 [{nameaddr.name}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc78)
+    2.  5.2 [{nameaddr.uri}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc79)
+    3.  5.3 [{nameaddr.len}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc80)
+    4.  5.4 [{nameaddr.param,param\_name}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc81)
+    5.  5.5 [{nameaddr.params}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc82)
+6.  6. [IP Transformations](https://www.opensips.org/Documentation/Script-Tran-3-6#toc83)
+    1.  6.1 [{ip.pton}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc84)
+    2.  6.2 [{ip.ntop}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc85)
+    3.  6.3 [{ip.isip}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc86)
+    4.  6.4 [{ip.isip4}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc87)
+    5.  6.5 [{ip.isip6}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc88)
+    6.  6.6 [{ip.family}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc89)
+    7.  6.7 [{ip.resolve}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc90)
+    8.  6.8 [{ip.matches}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc91)
+    9.  6.9 [{ip.isprivate}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc92)
+7.  7. [CSV Transformations](https://www.opensips.org/Documentation/Script-Tran-3-6#toc93)
+    1.  7.1 [{csv.count}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc94)
+    2.  7.2 [{csv.value}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc95)
+8.  8. [SDP Transformations](https://www.opensips.org/Documentation/Script-Tran-3-6#toc96)
+    1.  8.1 [{sdp.line}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc97)
+    2.  8.2 [{sdp.stream}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc98)
+    3.  8.3 [{sdp.stream-delete}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc99)
+9.  9. [Regular Expression Transformations](https://www.opensips.org/Documentation/Script-Tran-3-6#toc100)
+    1.  9.1 [{re.subst,reg\_exp}](https://www.opensips.org/Documentation/Script-Tran-3-6#toc101)
+10.  10. [Examples](https://www.opensips.org/Documentation/Script-Tran-3-6#toc102)
+
+Intuitively, a **Transformation** is a function that is applied to a variable(script variable, pseudo-variable, AVP, static string) to get a special value from it. The input value is not altered.
+
+Examples of using different kinds of variables in **OpenSIPS script**:
+
+\# check if username in From header is equal with username in To header
+if ($fU == $tU) {
+   ...
+}
+
+# Request-URI username based processing
+switch ($rU) {
+   case "1234":
+      ...
+   break;
+   case "5678":
+      ...
+   break;
+   default:
+     ...
+}
+
+# assign an integer value to an variable
+$var(gw\_count) = 1;
+
+# assign a string value to an AVP
+$avp(server) = "opensips";
+
+# store the Request-URI in a variable
+$var(ru\_backup) = $ru;
+
+# concat "sip:" + From username + "@" + To domain in a script variable x
+$var(x) = "sip:" + $fU + "@" + $td;
+
+The transformations are intended to facilitate access to different attributes of variables (like strlen of value, parts of value, substrings) or complete different value of variables (encoded in hexa, md5 value, escape/unescape value for DB operations...).
+
+A transformation is represented in between **'{**' and **'}**' and follows the name of a variable. When using transformations, the variable name and transformations **must** be enclosed in between **'(**' and **')**'.
+
+Example:
+
+\# the length of From URI ($fu is pseudo-variable for From URI)
+
+$(fu{s.len})
+
+Multiple transformations can be applied to a variable at the same time.
+
+\# the length of escaped 'Test' header body
+
+$(hdr(Test){s.escape.common}{s.len})
+
+All transformations, unless otherwise specified, will return NULL in case of error or unsuccessful operation (e.g looking for an nonexistent parameter in an URI with the "{uri.param,name}" transformation). Also, NULL is accepted as input for transformations in order to support chaining with a previous one that would return NULL.
+
+The transformations can be used anywhere, being considered parts of script variables support -- in xlog, avpops or other modules' functions and parameters, in right side assignment expressions or in comparisons.
+
+IMPORTANT: To learn what variables can be used with transformations see [Scripting variables list](https://www.opensips.org/Documentation/Script-CoreVar "Script-CoreVar").
+
+### 1. String Transformations
+
+The name of these transformation starts with 's.'. They are intended to apply string operations to variables.
+
+Available transformations in this class:
+
+#### 1.1 {s.len} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.len)
+
+Return strlen of variable value
+
+$var(x) = "abc";
+if($(var(x){s.len}) == 3)
+{
+   ...
+}
+
+#### 1.2 {s.int} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.int)
+
+Converts the initial part of the given string to an integer value. Returns 0 if there were no digits at all.
+
+$var(dur) = "2868.12 sec";
+if ($(var(dur){s.int}) < 3600) {
+  ...
+}
+
+#### 1.3 {s.md5} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.md5)
+
+Returns the MD5 hash of the given input.
+
+xlog("MD5 over From username: $(fU{s.md5})\\n");
+
+#### 1.4 {s.reverse} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.reverse)
+
+Returns the input string in revers order.
+
+$var(forward) = "onetwothree";
+$var(reverse) = $(var(forward){s.reverse}); //Contains "eerhtowteno";
+
+#### 1.5 {s.substr,offset,length} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.substr)
+
+Return the substring starting at _offset_ having size of _length_. If _offset_ is negative, then it is counted from the end of the value, -1 being the last char. In case of a positive value, _0_ is the first char. The _length_ must be positive and in case of both _0_ and _greater-than-string-length_ values, the substring to the end of the input string is returned. Both offset and length may be specified using variables.
+
+Example:
+
+$var(x) = "abcd";
+$(var(x){s.substr,1,0}) = "bcd"
+
+#### 1.6 {s.select,index,separator} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.select)
+
+Return a field from the value of a variable. The field is selected based on separator and index. The separator must be a character used to identify the fields. Index must be a integer value or a variable. If index is negative, the count of fields starts from end of value, -1 being last field. If index is positive, 0 is the first field. Note that if a field is empty, an empty string will be returned and not NULL.
+
+Example:
+
+$var(x) = "12,34,56";
+$(var(x){s.select,1,,}) =\> "34" ;
+
+$var(x) = "12,34,56";
+$(var(x){s.select,-2,,}) =\> "34"
+
+#### 1.7 {s.encode.hexa} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.encode.hexa)
+
+Return encoding in hexa of variable's value
+
+#### 1.8 {s.decode.hexa} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.decode.hexa)
+
+Return decoding from hexa of variable's value
+
+#### 1.9 {s.escape.common} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.escape.common)
+
+Return escaped string of variable's value. Characters escaped are ', ", and 0. Useful when doing DB queries (care should be taken for non Latin character set).
+
+#### 1.10 {s.unescape.common} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.unescape.common)
+
+Return unescaped string of variable's value. Reverse of above transformation.
+
+#### 1.11 {s.escape.user} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.escape.user)
+
+Return escaped string of variable's value, changing to '%hexa' the characters that are not allowed in user part of SIP URI following RFC requirements.
+
+#### 1.12 {s.unescape.user} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.unescape.user)
+
+Return unescaped string of variable's value, changing '%hexa' to character code. Reverse of above transformation.
+
+#### 1.13 {s.escape.param} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.escape.param)
+
+Return escaped string of variable's value, changing to '%hexa' the characters that are not allowed in the param part of SIP URI following RFC requirements.
+
+#### 1.14 {s.unescape.param} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.unescape.param)
+
+Return unescaped string of variable's value, changing '%hexa' to character code. Reverse of above transformation.
+
+#### 1.15 {s.tolower} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.tolower)
+
+Return string with lower case ASCII letters.
+
+#### 1.16 {s.toupper} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.toupper)
+
+Return string with upper case ASCII letters.
+
+#### 1.17 {s.index} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.index)
+
+Searches for one string within another starting at the beginning of the first string. Returns starting index of the string found or NULL if not found. The optional index specifies the offset to begin the search at in the string. Negative offsets are supported and will wrap.
+
+$var(strtosearch) = 'onetwothreeone';
+$var(str) = 'one';
+
+# Search the string starting at 0 index
+$(var(strtosearch){s.index, $var(str)}) # will return 0
+$(var(strtosearch){s.index, $var(str), 0}) # Same as above
+$(var(strtosearch){s.index, $var(str), 3}) # returns 11
+
+# Negative offset
+$(var(strtosearch){s.index, $var(str), -11}) # Same as above
+
+# Negative wrapping offset
+$(var(strtosearch){s.index, $var(str), -25}) # Same as above
+
+#Test for existence of string in another
+if ($(var(strtosearch){s.index, $var(str)}) != NULL)
+    xlog("found $var(sstr) in $var(strtosearch)\\n");
+
+#### 1.18 {s.rindex} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.rindex)
+
+Searches for one string within another starting at the end of the first string. Returns starting index of the string found or NULL if not found. The optional index specifies an offset to start the search before, e.g the start of the found string will be before the supplied offset. Negative offsets are supported and will wrap.
+
+$(var(strtosearch){s.rindex, $var(str)}) # will return 11
+$(var(strtosearch){s.rindex, $var(str), -3}) # will return 11
+$(var(strtosearch){s.rindex, $var(str), 11}) # will return 11
+$(var(strtosearch){s.rindex, $var(str), -4}) # will return 0
+
+#### 1.19 {s.fill.left, tok, len} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.fill.left)
+
+Fills a string to the left with a char/string until the given final length is reached. The initial string is returned if its length is greater or equal to the given final length.
+
+$var(in) = "485"; (also works for integer PVs)
+
+$(var(in){s.fill.left, 0, 3})    =\> 485    
+$(var(in){s.fill.left, 0, 6})    =\> 000485
+$(var(in){s.fill.left, abc, 8})  =\> bcabc485
+
+**Note**: currently optimized for speed. Does not support pseudo-variable parameters or successive "s.fill" cascading.
+
+#### 1.20 {s.fill.right, tok, len} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.fill.right)
+
+Fills a string to the right with a char/string until the given final length is reached. The initial string is returned if its length is greater or equal to the given final length.
+
+$var(in) = 485; (also works for string PVs)
+
+$(var(in){s.fill.right, 0, 3})   =\> 485
+$(var(in){s.fill.right, 0, 6})   =\> 485000
+$(var(in){s.fill.right, abc, 8}) =\> 485abcab
+
+#### 1.21 {s.width, len} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.width)
+
+Truncates or expands the input to the given _len_. Expanding is done to the right with the space character ' '. Truncating is done in a similar manner, from the right. Examples:
+
+Fills a string to the right with a char/string until the given final length is reached. The initial string is returned if its length is greater or equal to the given final length. If used on pseudo-variables containing integers, it will convert them to strings.
+
+$var(in) = "transformation";
+
+$(var(in){s.width, 14})   =\> "transformation"
+$(var(in){s.width, 16})  =\> "transformation  "
+$(var(in){s.width, 9})   =\> "transform"
+
+#### 1.22 {s.trim} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.trim)
+
+Strips any leading or trailing whitespace from the input string. Trimmed characters are " " (space), \\t (tab), \\n (newline) and \\r (carriage return).
+
+$var(in) = "\\t \\n input string  \\r  ";
+
+$(var(in){s.trim})   =\> "input string"
+
+#### 1.23 {s.trimr} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.trimr)
+
+Strips any trailing whitespace from the input string. Trimmed characters are " " (space), \\t (tab), \\n (newline) and \\r (carriage return).
+
+$var(in) = "\\t \\n input string  \\r  ";
+
+$(var(in){s.trimr})   =\> "\\t \\n input string"
+
+#### 1.24 {s.triml} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.triml)
+
+Strips any leading whitespace from the input string. Trimmed characters are " " (space), \\t (tab), \\n (newline) and \\r (carriage return).
+
+$var(in) = "\\t \\n input string  \\r  ";
+
+$(var(in){s.triml})   =\> "input string  \\r  "
+
+#### 1.25 {s.dec2hex} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.dec2hex)
+
+Converts a decimal(base 10) number to hexadecimal (in base 16), represented as string.
+
+#### 1.26 {s.hex2dec} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.hex2dec)
+
+Converts a hexadecimal number (base 16) represented as string to decimal (base 10).
+
+#### 1.27 {s.b64encode} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.b64encode)
+
+Represents binary input data in an ASCII string format.
+
+$var(in) = "\\x2\\x3\\x4\\x5!@#%^&\*";
+$(var(in){s.b64encode})   =\> "AgMEBSFAIyVeJio="
+
+#### 1.28 {s.b64decode} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.b64decode)
+
+Assumes input is a Base64 string and decodes as many characters as possible.
+
+$var(in) = "AgMEBSFAIyVeJio=";
+$(var(in){s.b64decode})   =\> "\\x2\\x3\\x4\\x5!@#%^&\*"
+
+#### 1.29 {s.xor,secret} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.xor)
+
+Performs one or more logical XOR operations with (a part of) the "secret" string parameter and the input string, depending on the lengths of the two strings.
+
+$var(in) = "aaaaaabbbbbb";
+$(var(in){s.xor,x})   =\> "!/\>^P!/\>^P!^U2^Q!^U2^Q"
+
+#### 1.30 {s.eval} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.eval)
+
+Interprets the string as a variable formatted string, evaluating all the variables declared in it.
+
+$var(in) = "client";
+$var(format) = "Hello, $var(in)!";
+$(var(format){s.eval})   =\> "Hello, client!"
+
+#### 1.31 {s.date2unix} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.date2unix)
+
+Assumes the input is an RFC-3261 SIP "Date" header value, parses it accordingly and returns the equivalent UNIX timestamp.
+
+$var(date) = "Thu, 13 Jun 2024 12:48:00 GMT";
+$(var(date){s.date2unix})   =\> "1718282880";
+
+#### 1.32 {s.sha1} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.sha1)
+
+Returns the SHA1 hash of the given input.
+
+xlog("SHA1 over From username: $(fU{s.sha1})\\n");
+
+#### 1.33 {s.sha224} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.sha224)
+
+Returns the SHA224 hash of the given input.
+
+xlog("SHA224 over From username: $(fU{s.sha224})\\n");
+
+#### 1.34 {s.sha256} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.sha256)
+
+Returns the SHA256 hash of the given input.
+
+xlog("SHA256 over From username: $(fU{s.sha256})\\n");
+
+#### 1.35 {s.sha384} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.sha384)
+
+Returns the SHA384 hash of the given input.
+
+xlog("SHA384 over From username: $(fU{s.sha384})\\n");
+
+#### 1.36 {s.sha512} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.sha512)
+
+Returns the SHA512 hash of the given input.
+
+xlog("SHA512 over From username: $(fU{s.sha512})\\n");
+
+#### 1.37 {s.sha1\_hmac,key} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.sha1_hmac)
+
+Returns the SHA1 HMAC hash of the given input using key.
+
+xlog("SHA1 HMAC over From username using key 'secret': $(fU{s.sha1\_hmac,secret})\\n");
+
+#### 1.38 {s.sha224\_hmac,key} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.sha224_hmac)
+
+Returns the SHA224 HMAC hash of the given input using key.
+
+xlog("SHA224 HMAC over From username using key 'secret': $(fU{s.sha224\_hmac,secret})\\n");
+
+#### 1.39 {s.sha256\_hmac,key} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.sha256_hmac)
+
+Returns the SHA256 HMAC hash of the given input using key.
+
+xlog("SHA256 HMAC over From username using key 'secret': $(fU{s.sha256\_hmac,secret})\\n");
+
+#### 1.40 {s.sha384\_hmac,key} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.sha384_hmac)
+
+Returns the SHA384 HMAC hash of the given input using key.
+
+xlog("SHA384 HMAC over From username using key 'secret': $(fU{s.sha384\_hmac,secret})\\n");
+
+#### 1.41 {s.sha512\_hmac,key} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#s.512_hmac)
+
+Returns the SHA512 HMAC hash of the given input using key.
+
+xlog("SHA512 HMAC over From username using key 'secret': $(fU{s.sha512\_hmac,secret})\\n");
+
+### 2. URI Transformations
+
+The name of transformation starts with 'uri.'. The value of the variable is considered to be a SIP URI. This transformation returns parts of SIP URI (see struct sip\_uri). If that part is missing, the returned value is an empty string.
+
+Available transformations in this class:
+
+#### 2.1 {uri.user} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#uri.user)
+
+Returns the user part of the URI schema.
+
+#### 2.2 {uri.host} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#uri.host)
+
+(same as **{uri.domain}**)
+
+Returns the domain part of the URI schema.
+
+#### 2.3 {uri.passwd} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#uri.passwd)
+
+Returns the password part of the URI schema.
+
+#### 2.4 {uri.port} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#uri.port)
+
+Returns the port of the URI schema.
+
+#### 2.5 {uri.params} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#uri.params)
+
+Returns all the URI parameters into a single string.
+
+#### 2.6 {uri.param,name} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#uri.param)
+
+Returns the value of URI parameter with name "name"
+
+#### 2.7 {uri.headers} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#uri.headers)
+
+Returns URI headers.
+
+#### 2.8 {uri.transport} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#uri.transport)
+
+Returns the value of transport URI parameter.
+
+#### 2.9 {uri.ttl} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#uri.ttl)
+
+Returns the value of ttl URI parameter.
+
+#### 2.10 {uri.uparam} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#uri.uparam)
+
+Returns the value of user URI parameter
+
+#### 2.11 {uri.maddr} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#uri.maddr)
+
+Returns the value of maddr URI parameter.
+
+#### 2.12 {uri.method} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#uri.method)
+
+Returns the value of method URI parameter.
+
+#### 2.13 {uri.lr} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#uri.lr)
+
+Returns the value of lr URI parameter.
+
+#### 2.14 {uri.r2} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#uri.r2)
+
+Returns the value of r2 URI parameter.
+
+#### 2.15 {uri.schema} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#uri.schema)
+
+Returns the schema part of the given URI.
+
+### 3. VIA Transformations
+
+These transformations parse Via headers and all starts with `via.`. The value of the variable is considered to be a SIP Via header. This transformation returns parts of the via header (see struct via\_body). If the requested part is missing, the returned value is an empty string. Transformation will fail (with script error) if variable holding the Via header is empty. Unless otherwise specified in descriptions below, the result of transform is a string (not an integer).
+
+Examples:
+
+    $var(upstreamtransport) = $(hdr(Via)\[1\]{via.transport}{s.tolower});
+    $var(upstreamip) = $(hdr(Via)\[1\]{via.param,received});
+    $var(clientport) = $(hdr(Via)\[-1\]{via.param,rport});
+
+Available transformations in this class:
+
+#### 3.1 {via.name} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#via.name)
+
+Returns the `protocol-name` (of RFC3261 BNF), generally `SIP`.
+
+#### 3.2 {via.version} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#via.version)
+
+Returns the `protocol-version` (of RFC3261 BNF), generally `2.0`.
+
+#### 3.3 {via.transport} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#via.transport)
+
+Returns the `transport` (of RFC3261 BNF), e.g., `UDP`, `TCP`, `TLS`. This is the transport protocol used to send the request message.
+
+#### 3.4 {via.host} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#via.host)
+
+(same as `{via.domain}`)
+
+Returns the `host` portion of the `sent-by` (of RFC3261 BNF). Typically this is the IP address of the sender of the request message, and is the address to which the response will be sent.
+
+#### 3.5 {via.port} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#via.port)
+
+Returns the `port` portion of the `sent-by` (of RFC3261 BNF). Typically this is the IP port of the sender of the request message, and is the address to which the response will be sent. Result of transform is valid as both integer and string.
+
+#### 3.6 {via.comment} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#via.comment)
+
+The comment associated with the via header. The `struct via_body` contains this field, but it isn't clear that RFC3261 allows Via headers to have comments (see text at top of page 221, and the BNF doesn't explicit allow comment within Via). The comment is the text enclosed within parens.
+
+#### 3.7 {via.params} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#via.params)
+
+Returns all the Via headers parameters (`via-param` of RFC3261 BNF) as single string. Result can be processed using the `{param.*}` transforms. This is essentially everything after the host and port.
+
+#### 3.8 {via.param,name} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#via.param)
+
+Returns the value of Via header parameter with name `name`. Typical parameters include `branch`, `rport` and `received`.
+
+#### 3.9 {via.branch} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#via.branch)
+
+Returns the value of the branch parameter in the VIA header.
+
+#### 3.10 {via.received} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#via.received)
+
+Returns the value of the received parameter in the VIA header, if any.
+
+#### 3.11 {via.rport} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#via.rport)
+
+Returns the value of the rport parameter in the VIA header, if any.
+
+### 4. Parameters List Transformations
+
+The name of the transformation starts with "param.". The value of the variable is considered to be a string like name1=value1;name2=value2;...". The transformations returns the value for a specific parameter, or the name of a parameter at a specific index.
+
+Available transformations in this class:
+
+#### 4.1 {param.value,name} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#param.value)
+
+Returns the value of parameter 'name'
+
+Example:
+
+"a=1;b=2;c=3"{param.value,c} = "3"
+
+'name' can be a variable
+
+#### 4.2 {param.exist,name} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#param.exist)
+
+Returns 1 if the parameter `name` exists (with or without value), else 0. Returned value is both string and integer. `name` can be variable. This can be used to test existence of parameters that do not have values.
+
+Example:
+
+"a=0;b=2;ob;c=3"{param.exist,ob};         # returns 1
+"a=0;b=2;ob;c=3"{param.exist,a};          # returns 1
+"a=0;b=2;ob;c=3"{param.exist,foo};        # returns 0
+
+#### 4.3 {param.valueat,index} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#param.valueat)
+
+Returns the value of parameter at position give by 'index' (0-based index)
+
+Example:
+
+"a=1;b=2;c=3"{param.valueat,1} = "2"
+
+'index' can be a variable
+
+#### 4.4 {param.name,index} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#param.name)
+
+Returns the name of parameter at position 'index'.
+
+Example:
+
+"a=1;b=2;c=3"{param.name,1} = "b"
+
+#### 4.5 {param.count} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#param.count)
+
+Returns the number of parameters in the list.
+
+Example:
+
+"a=1;b=2;c=3"{param.count} = 3
+
+### 5. Name-address Transformations
+
+The name of the transformation starts with 'nameaddr.'. The value of the variable is considered to be a string like '\[display\_name\] uri'. The transformations returns the value for a specific field.
+
+Each transformation supports an optional 'index'. This can be used when passing a list of nameaddr specs, and represents the spec index that should be considered when extracting the value. Indexes start with 0 (the default value when missing), and can accept negative values (-1 represents the last nameaddr spec).
+
+Example:
+
+'"first" <first@opensips.org\>, "second" <second@opensips.org\>' {nameaddr.0.name} = "first"
+'"first" <first@opensips.org\>, "second" <second@opensips.org\>' {nameaddr.1.name} = "second"
+'"first" <first@opensips.org\>, "second" <second@opensips.org\>' {nameaddr.-1.name} = "second"
+
+Available transformations in this class:
+
+#### 5.1 {nameaddr.name} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#nameaddr.name)
+
+Returns the value of display name
+
+Example:
+
+'"test" <sip:test@opensips.org\>' {nameaddr.name} = "test"
+
+#### 5.2 {nameaddr.uri} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#nameaddr.uri)
+
+Returns the value of URI
+
+Example:
+
+'"test" <sip:test@opensips.org\>' {nameaddr.uri} = sip:test@opensips.org
+
+#### 5.3 {nameaddr.len} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#nameaddr.len)
+
+Returns the length of the entire name-addr part from the value.
+
+#### 5.4 {nameaddr.param,param\_name} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#nameaddr.param)
+
+Returns the value of the parameter with name param\_name. Example:
+
+'"test" <sip:test@opensips.org\>;tag=dat43h' {nameaddr.param,tag} = dat43h
+
+#### 5.5 {nameaddr.params} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#nameaddr.params)
+
+Returns all the parameters and their corresponding values. Example:
+
+'"test" <sip:test@opensips.org\>;tag=dat43h;private=yes' {nameaddr.params} = "tag=dat43h;private=yes"
+
+### 6. IP Transformations
+
+The name of the transformation starts with 'ip.'. Available transformations in this class:
+
+#### 6.1 {ip.pton} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#ip.pton)
+
+Returns a binary representation of a string represented IP. Example:
+
+"193.668.3.634" {ip.pton} returns a 4 byte binary representation of the IP provided
+
+#### 6.2 {ip.ntop} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#ip.ntop)
+
+Returns a string representation of the binary IP provided Example:
+
+"193.668.3.634"{ip.pton}{ip.ntop} = "193.668.3.634"
+
+#### 6.3 {ip.isip} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#ip.isip)
+
+Returns `1` if the string provided is a valid IPv4 or IPv6 address, otherwise `0`. Example:
+
+"193.668.3.634" {ip.isip} = 1
+"193.668.3.634.1" {ip.isip} = 0
+
+#### 6.4 {ip.isip4} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#ip.isip4)
+
+Returns `1` if the string provided is a valid IPv4, otherwise `0`. Example:
+
+"193.668.3.634" {ip.isip4} = 1
+
+#### 6.5 {ip.isip6} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#ip.isip6)
+
+Returns `1` if the string provided is a valid IPv6, otherwise `0`. Example:
+
+"193.668.3.634" {ip.isip6} = 0
+"2001:0db8:85a3:0000:0000:8a2e:0370:7334" {ip.isip6} = 1
+
+#### 6.6 {ip.family} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#ip.family)
+
+Returns INET or INET6 if the binary IP representation provided is IPv4 or IPv6. Example:
+
+"193.668.3.634" {ip.pton}{ip.family} = "INET"
+
+#### 6.7 {ip.resolve} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#ip.resolve)
+
+Returns the resolved IP address corresponding to the string domain provided. Transformation has no effect if a string IP is provided. Example:
+
+"opensips.org" {ip.resolve} = "78.46.64.50"
+
+#### 6.8 {ip.matches} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#ip.matches)
+
+Checks if the input IP address matches a net mask given as IP/masklen (short format). It returns 1 if matches, 0 if not. NULL is returned on error (invalid input, invalid parameter, AF mismatch). Variables are supported for the parameter. Example:
+
+if ( $(si{ip.matches,10.10.0.1/24})==1 )
+	xlog("It DOES match \\n");
+else
+	xlog("It DOES NOT match \\n");
+
+#### 6.9 {ip.isprivate} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#ip.isprivate)
+
+Checks if the input IP address is an IPv4 private IP, according to RFC 1918 and RFC 6598. It returns 1 if the IP is private, 0 if not. Example:
+
+if ( $(si{ip.isprivate})==1 )
+	xlog("source ip is private\\n");
+else
+	xlog("source ip is not private\\n");
+
+### 7. CSV Transformations
+
+The name of the transformation starts with "csv.". The value of the variable is considered to be a string like "field1,field2,...". The transformations return the number of entries in the provided CSV, or the field at a specified position in the CSV.
+
+Available transformations in this class:
+
+#### 7.1 {csv.count} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#csv.count)
+
+Returns the number of entries in the provided CSV. Example:
+
+"a,b,c" {csv.count} = 3
+
+#### 7.2 {csv.value} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#csv.value)
+
+Returns the entry at the specified positions. Indexing starts from 0. Example:
+
+"a,b,c" {csv.value,2} = c
+
+### 8. SDP Transformations
+
+The name of the transformation starts with "sdp.". The value of the variable is considered to be a valid SDP body. The transformation returns a specific line in the SDP body.
+
+Available transformations in this class:
+
+#### 8.1 {sdp.line} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#sdp.line)
+
+Returns the specified line in the SDP body. The transformations also accepts a second parameter, that specifies the line number of the first parameter's type to get from the SDP body. Indexing starts from 0. If the second parameter is missing, it is assumed to be 0. Example:
+
+if (is\_method("INVITE"))
+   {
+      $var(aline) = $(rb{sdp.line,a,1});
+      xlog("The second a line in the SDP body is $var(aline)\\n");
+   }
+
+if (is\_method("INVITE"))
+   {
+      $var(mline) = $(rb{sdp.line,m});
+      xlog("The first m line in the SDP body is $var(mline)\\n");
+   }
+
+#### 8.2 {sdp.stream} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#sdp.stream)
+
+Returns a specific stream (starting with the m= line) from an SDP body. The stream to be returned can be specified using its index within the body, or using on its media type. If specified as index, it starts at `0`, but it can also be negative, with `-1` being the last stream. If specified as media type, **only the first** stream of its type will be returned. If the media type or index does not exist, NULL is returned.
+
+Example:
+
+if (is\_method("INVITE"))
+   {
+      $var(first\_stream) = $(rb{sdp.stream,0});
+      xlog("First stream is $var(first\_stream)\\n");
+   }
+
+if (is\_method("INVITE"))
+   {
+      $var(audio\_stream) = $(rb{sdp.stream,audio});
+      xlog("Audio stream is $var(audio\_stream)\\n");
+   }
+
+#### 8.3 {sdp.stream-delete} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#sdp.stream-delete)
+
+Returns the specified SDP body with some of its streams deleted. The stream to be deleted can be specified using its index, or using on its media type. If specified as index, it starts at `0`, but it can also be negative, with `-1` being the last stream. If specified as media type, all streams matching will be deleted! If the media type or index does not exist, NULL is returned.
+
+Example:
+
+if (is\_method("INVITE"))
+   {
+      $var(new\_body) = $(rb{sdp.stream-delete,0});
+      xlog("SDP body without first stream is $var(new\_body)\\n");
+   }
+
+if (is\_method("INVITE"))
+   {
+      $var(new\_body) = $(rb{sdp.stream-delete,video});
+      xlog("SDP body without video stream is $var(new\_body)\\n");
+   }
+
+### 9. Regular Expression Transformations
+
+The name of the transformation starts with "re.". The input can be any string.
+
+#### 9.1 {re.subst,reg\_exp} [🔗](https://www.opensips.org/Documentation/Script-Tran-3-6#re.subst)
+
+The reg\_exp parameter can either be a plain string or a variable. The format of the reg\_exp is :
+
+    /posix\_match\_expression/replacement\_expression/flags
+
+The flags can be
+
+    i - match ignore case
+    s - match within multi-lines strings
+    g - replace all matches
+
+Example:
+
+$var(reg\_input)="abc";
+$var(reg) = "/a/A/g";
+xlog("Applying reg exp $var(reg) to $var(reg\_input) : $(var(reg\_input){re.subst,$var(reg)})\\n");
+
+...
+...
+xlog("Applying reg /b/B/g to $var(reg\_input) : $(var(reg\_input){re.subst,/b/B/g})\\n");
+
+### 10. Examples
+
+Within a variable, many transformation can be applied, being executed from left to right.
+
+*   The length of the value of parameter at position 1 (remember 0 is first position, 1 is second position)
+
+$var(x) = "a=1;b=22;c=333";
+$(var(x){param.value,$(var(x){param.name,1})}{s.len}) = 2
+
+*   Test if whether is un-registration or not
+
+if(is\_method("REGISTER") && is\_present\_hf("Expires") && $(hdr(Expires){s.int})==0)
+    xlog("This is a de-registration\\n");

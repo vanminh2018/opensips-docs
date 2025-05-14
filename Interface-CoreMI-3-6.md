@@ -1,0 +1,859 @@
+Title: openSIPS | Documentation / Core MI Functions
+
+URL Source: https://www.opensips.org/Documentation/Interface-CoreMI-3-6
+
+Markdown Content:
+| Documentation
+
+*   [Manuals](https://www.opensips.org/Documentation/Manuals "Manuals")
+*   [Advanced Tutorials](https://www.opensips.org/Documentation/Tutorials "Tutorials")
+*   [Tips & FAQ](https://www.opensips.org/Documentation/TipsFAQ "TipsFAQ")
+*   [Version Migration](https://www.opensips.org/Documentation/Migration "Migration")
+*   [OpenSIPS Webinars](https://www.opensips.org/Documentation/Webinars "Webinars")
+*   [Troubleshooting](https://www.opensips.org/Documentation/Troubleshooting "Troubleshooting")
+*   [OpenSIPS Tools](https://www.opensips.org/Documentation/Tools "Tools")
+*   [Devel Tutorial](https://www.opensips.org/Documentation/Development-Tutorials "Development-Tutorials")
+
+ | 
+
+##### Documentation -\> [Manuals](https://www.opensips.org/Documentation/Manuals "Manuals") -\> [Manual devel](https://www.opensips.org/Documentation/Manual-3-6 "OpenSIPS Manual - 3.6") -\> Core MI Functions
+
+* * *
+
+Pages for other versions: devel [3.5](https://www.opensips.org/Documentation/Interface-CoreMI-3-5 "Core MI Functions - 3.5") [3.4](https://www.opensips.org/Documentation/Interface-CoreMI-3-4 "Core MI Functions - 3.4") Older versions: [3.3](https://www.opensips.org/Documentation/Interface-CoreMI-3-3 "Core MI Functions - 3.3") [3.2](https://www.opensips.org/Documentation/Interface-CoreMI-3-2 "Core MI Functions - 3.2") [3.1](https://www.opensips.org/Documentation/Interface-CoreMI-3-1 "Core MI Functions - 3.1") [3.0](https://www.opensips.org/Documentation/Interface-CoreMI-3-0 "Core MI Functions - 3.0") [2.4](https://www.opensips.org/Documentation/Interface-CoreMI-2-4 "Core MI Functions - 2.4") [2.3](https://www.opensips.org/Documentation/Interface-CoreMI-2-3 "Core MI Functions - 2.3") [2.2](https://www.opensips.org/Documentation/Interface-CoreMI-2-2 "Core MI Functions - 2.2") [2.1](https://www.opensips.org/Documentation/Interface-CoreMI-2-1 "Core MI Functions - 2.1") [1.11](https://www.opensips.org/Documentation/Interface-CoreMI-1-11 "Core MI Functions - 1.11") [1.10](https://www.opensips.org/Documentation/Interface-CoreMI-1-10 "Core MI Functions - ver 1.10") [1.9](https://www.opensips.org/Documentation/Interface-CoreMI-1-9 "Core MI Functions - ver 1.9") [1.8](https://www.opensips.org/Documentation/Interface-CoreMI-1-8 "Core MI Functions - ver 1.8") [1.7](https://www.opensips.org/Documentation/Interface-CoreMI-1-7 "Core MI Functions - ver 1.7") [1.6](https://www.opensips.org/Documentation/Interface-CoreMI-1-6 "Core MI Functions - ver 1.6") [1.5](https://www.opensips.org/Documentation/Interface-CoreMI-1-5 "Core MI Functions - ver 1.5") [1.4](https://www.opensips.org/Documentation/Interface-CoreMI-1-4 "Core MI Functions - ver 1.4")
+
+**Core MI Functions v3.6**
+
+* * *
+
+**Table of Content** (hide)
+
+1.  1. [arg](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc1)
+2.  2. [kill](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc2)
+3.  3. [list\_blacklists](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc3)
+4.  4. [check\_blacklists](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc4)
+5.  5. [check\_blacklist](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc5)
+6.  6. [add\_blacklist\_rule](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc6)
+7.  7. [del\_blacklist\_rule](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc7)
+8.  8. [list\_tcp\_conns](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc8)
+9.  9. [log\_level \[level\] \[pid](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc9)\]
+10.  10. [log\_level\_filter consumer \[level\_filter](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc10)\]
+11.  11. [log\_mute\_state consumer \[mute\_state](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc11)\]
+12.  12. [ps](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc12)
+13.  13. [pwd](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc13)
+14.  14. [reload\_routes](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc14)
+15.  15. [sr\_get\_status](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc15)
+16.  16. [sr\_list\_status](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc16)
+17.  17. [sr\_list\_reports](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc17)
+18.  18. [sr\_list\_identifiers](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc18)
+19.  19. [uptime](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc19)
+20.  20. [version](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc20)
+21.  21. [which](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc21)
+22.  22. [get\_statistics](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc22)
+23.  23. [list\_statistics](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc23)
+24.  24. [reset\_statistics](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc24)
+25.  25. [reset\_all\_statistics](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc25)
+26.  26. [cache\_store](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc26)
+27.  27. [cache\_fetch](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc27)
+28.  28. [cache\_remove](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc28)
+29.  29. [event\_subscribe](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc29)
+30.  30. [events\_list](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc30)
+31.  31. [raise\_event](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc31)
+32.  32. [subscribers\_list](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc32)
+33.  33. [mem\_pkg\_dump](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc33)
+34.  34. [mem\_shm\_dump](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc34)
+35.  35. [shm\_check](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc35)
+36.  36. [xlog\_level \[level\]](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#toc36)
+
+MI (management interface) functions which are exported by **OpenSIPS** core.
+
+#### 1. arg [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#arg)
+
+Returns the full list of arguments used when **OpenSIPS** was started. As in UNIX, the first argument is the name of executable binary.  
+**Arguments**: none  
+**Output**: an array with multiple strings representing the arguments.
+
+Example of usage:
+
+    # opensips-cli -x mi arg
+    \[
+        "./opensips",
+        "-f",
+        "/etc/openser/test.cfg"
+    \]
+
+#### 2. kill [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#kill)
+
+The command will terminate **OpenSIPS** (and internal shutdown).  
+**Arguments**: none  
+**Output**: none
+
+Examples of usage:
+
+    # opensips-cli -x mi kill
+
+#### 3. list\_blacklists [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#list_blacklists)
+
+The command lists all the defined (static or learned) blacklists from **OpenSIPS**.  
+**Arguments**:
+
+*   _name_ (optional) - filter and print only rules in a specific blacklist
+
+**Output**: an array with each object describing the list (name, owner, flags); the "Rules" item is an array with each object member describing the rules (blacklists) for each list (IP/mask, protocol, port, matching regexp, flags).
+
+Examples of usage:
+
+    # opensips-cli -x mi list\_blacklists
+
+#### 4. check\_blacklists [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#check_blacklists)
+
+The command returns all the blacklists that match an proto:IP:port+pattern.  
+**Arguments**:
+
+*   _proto_ (optional) - protocol of the check rule - if missing, "any" protocol is used. Note that an "any" protocol check can only match an "any" protocol rule.
+*   _ip_ - the mandatory IP that is used to match the rules
+*   _port_ (optional) - the port of the check rule - if missing, 0/any port is used. Note that a 0 port will only match a 0 port rule.
+*   _pattern_ (optional) - optional pattern to check against the rules
+
+**Output**: an array with the names of each blacklist that matched.
+
+Examples of usage:
+
+    # opensips-cli -x mi check\_blacklists 127.0.0.1
+    # opensips-cli -x mi check\_blacklists udp 127.0.0.1 5060
+
+#### 5. check\_blacklist [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#check_blacklist)
+
+The command check whether a proto:IP:port+pattern matches any rule of a blacklist.  
+**Arguments**:
+
+*   _name_ = the name of the blacklist to check against
+*   _proto_ (optional) - protocol of the check rule - if missing, "any" protocol is used. Note that an "any" protocol check can only match an "any" protocol rule.
+*   _ip_ - the mandatory IP that is used to match the rules
+*   _port_ (optional) - the port of the check rule - if missing, 0/any port is used. Note that a 0 port will only match a 0 port rule.
+*   _pattern_ (optional) - optional pattern to check against the rules
+
+**Output**: an object containing the first rule that matched, or an error if nothing matched.
+
+Examples of usage:
+
+    # opensips-cli -x mi check\_blacklist net\_dynamic 127.0.0.1
+    # opensips-cli -x mi check\_blacklists net\_dynamic udp 127.0.0.1 5060
+
+#### 6. add\_blacklist\_rule [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#add_blacklist_rule)
+
+Adds a rule to a non-readonly blacklist.  
+**Arguments**:
+
+*   _name_\- the name of the blacklist to add to
+*   _rule_ - a string containing a blacklist rule, according to [**dst\_blacklist**](https://www.opensips.org/Documentation/Script-CoreParameters-3-6#dst_blacklist) parameter
+*   _expire_ (optional) - indicates the number of seconds the rule should expire
+
+**Output**: success or failed object.
+
+Examples of usage:
+
+    # opensips-cli -x mi add\_blacklist\_rule net\_dynamic '!tcp,127.0.0.1,5060'
+    # opensips-cli -x mi add\_blacklist\_rule net\_dynamic '!tcp,127.0.0.1,5060' 3600
+
+#### 7. del\_blacklist\_rule [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#del_blacklist_rule)
+
+Removes a rule from a non-readonly blacklist.  
+**Arguments**:
+
+*   _name_ - the name of the blacklist to remove from
+*   _rule_ - a string containing a blacklist rule, according to [**dst\_blacklist**](https://www.opensips.org/Documentation/Script-CoreParameters-3-6#dst_blacklist) parameter
+
+**Output**: success or failed object.
+
+Examples of usage:
+
+    # opensips-cli -x mi del\_blacklist\_rule net\_dynamic '!tcp,127.0.0.1,5060'
+
+#### 8. list\_tcp\_conns [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#list_tcp_conns)
+
+The command lists all ongoing TCP/TLS connection from **OpenSIPS**.  
+**Arguments**: none  
+**Output**: an array with one object per connection with the following attributes : ID, type, state, source, destination, lifetime, alias port.
+
+Examples of usage:
+
+    # opensips-cli -x mi list\_tcp\_conns
+
+#### 9. log\_level [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#log_level) \[level\] \[pid\]
+
+Get or set the logging level of one or all OpenSIPS processes. If no argument is passed to the **log\_level** command, it will print a table with the current logging levels of all processes. If a logging **level** is given, it will be set for each process. If **pid** is also given, the logging level will change only for that process.  
+**Arguments**:
+
+*   _level_ (optional) - logging level (-3...4) (see [meaning of the values](https://www.opensips.org/Documentation/Script-CoreParameters-3-6#log_level "Core Parameters - 3.6"))
+*   _pid_ (optional) - Unix pid (validated by OpenSIPS)
+
+Examples of usage:
+
+    # opensips-cli -x mi log\_level
+    {
+        "Processes": \[
+            {
+                "PID": 10670,
+                "Log level": 2,
+                "Type": "attendant"
+            },
+            {
+                "PID": 10672,
+                "Log level": 3,
+                "Type": "MI FIFO"
+            },
+            {
+                "PID": 10673,
+                "Log level": 1,
+                "Type": "SIP receiver udp:193.668.3.633:5060"
+            },
+        \]
+    }
+    # opensipsctl fifo log\_level 1
+    {
+        "New global log level": 1
+    }
+    # opensipsctl fifo log\_level 4 10670
+    {
+        "Log level": 1
+    }
+
+#### 10. log\_level\_filter [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#log_level_filter) consumer \[level\_filter\]
+
+Get or set the level of the extra filtering applied to log messages for a specific logging "consumer"(_stderror_, _syslog_ or _event_). If **log\_level\_filter** is not given, the command will print the current level filter for the specified consumer.
+
+**Arguments**:
+
+*   _consumer_ (optional) - logging consumer: _stderror_, _syslog_ or _event_;
+*   _log\_level\_filter_ (optional) - the log level filter.
+
+Examples of usage:
+
+    # opensips-cli -x mi log\_level\_filter stderror
+    {
+        "Log level filter": 3
+    }
+    # opensips-cli -x mi log\_level\_filter stderror 1
+    "OK"
+
+#### 11. log\_mute\_state [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#log_mute_state) consumer \[mute\_state\]
+
+Get or set the mute state (printing enabled/disabled) of a specific logging "consumer"(_stderror_, _syslog_ or _event_). If **mute\_state** is not given, the command will print the current mute state for the specified consumer.
+
+**Arguments**:
+
+*   _consumer_ (optional) - logging consumer: _stderror_, _syslog_ or _event_;
+*   _mute\_state_ (optional) - the new mute state: _1_ - muted or _0_ - unmuted (enabled)
+
+Examples of usage:
+
+    # opensips-cli -x mi log\_mute\_state syslog
+    {
+        "mmute state": 0
+    }
+    # opensips-cli -x mi log\_mute\_state syslog 1
+    "OK"
+
+#### 12. ps [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#ps)
+
+The command will list all all **OpenSIPS** processes, along with type and description.  
+**Arguments**: none  
+**Output**: multiple objects, each one containing a process ID (internal), PID (OS) and Type.
+
+Examples of usage:
+
+    # opensips-cli -x mi ps
+{
+    "Processes": \[
+        {
+            "ID": 0,
+            "PID": 27271,
+            "Type": "attendant"
+        },
+        {
+            "ID": 1,
+            "PID": 27272,
+            "Type": "MI FIFO"
+        },
+        {
+            "ID": 2,
+            "PID": 27273,
+            "Type": "time\_keeper"
+        },
+        {
+            "ID": 3,
+            "PID": 27274,
+            "Type": "timer"
+        },
+        {
+            "ID": 4,
+            "PID": 27275,
+            "Type": "SIP receiver udp:127.0.0.1:5060"
+        },
+        {
+            "ID": 5,
+            "PID": 27276,
+            "Type": "Timer handler"
+        }
+    \]
+}
+
+#### 13. pwd [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#pwd)
+
+Prints the working directory of **OpenSIPS** instance.  
+**Arguments**: none  
+**Output**: a single item containing the working directory full path.
+
+Examples of usage:
+
+    # opensips-cli -x mi pwd
+    {
+        "WD": "/"
+    }
+
+#### 14. reload\_routes [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#reload_routes)
+
+Triggers the reload of the routing block (the routes) from the script during the runtime. **Arguments**: none  
+**Output**: none
+
+Please note that there are some limitations of when a reload is possible or not. Depending on the initial configuration of your modules, the reload may be rejected as the usage of the functions in the new script is not compatible with the original module setting and initialization.  
+If the reload fails, take a look at the logs to understand why - it may have been a syntax error or maybe a module related constraint. Anyhow, if the reload fails, there is no impact on your running OpenSIPS.
+
+#### 15. sr\_get\_status [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#sr_get_status)
+
+The MI equivalent of the [sr\_check\_status() script function](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#sr_check_status) - to get the status of an 'status/report' identifier/group.
+
+**Arguments**: a mandatory _group_ and optional _identifier_, see the parameters of the [sr\_check\_status() script function](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#sr_check_status). **Output**: the readiness, the status and details of the identifier/group (see the aggregation note for the return code of the [sr\_check\_status() script function](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#sr_check_status)
+
+Examples of usage:
+
+\# opensips-cli -x mi sr\_get\_status core
+{
+    "Readiness": true,
+    "Status": 1,
+    "Details": "running"
+}
+
+
+# opensips-cli -x mi sr\_get\_status drouting all
+{
+    "Readiness": true,
+    "Status": 1,
+    "Details": "aggregated"
+}
+
+#### 16. sr\_list\_status [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#sr_list_status)
+
+Command to list the status of the identifiers within one or all 'status/report' groups.
+
+**Arguments**: an optional 'status/report' _group_, see the [sr\_check\_status() script function](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#sr_check_status) for more details. **Output**: the readiness, the status and details for all the identifiers within the requested group, or within all defined/registered groups.
+
+Examples of usage:
+
+#opensips-cli -x mi sr\_list\_status 
+\[
+    {
+        "Name": "drouting",
+        "Identifiers": \[
+            {
+                "Name": "Default",
+                "Readiness": true,
+                "Status": 1,
+                "Details": "data available"
+            }
+        \]
+    },
+    {
+        "Name": "test",
+        "Identifiers": \[
+            {
+                "Name": "main",
+                "Readiness": true,
+                "Status": 1
+            }
+        \]
+    },
+    {
+        "Name": "core",
+        "Identifiers": \[
+            {
+                "Name": "main",
+                "Readiness": true,
+                "Status": 1,
+                "Details": "running"
+            }
+        \]
+    }
+\]
+
+#### 17. sr\_list\_reports [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#sr_list_reports)
+
+Command to list the full set of reports (logs) collected by 'status/report' identifiers.
+
+**Arguments**:
+
+*   an optional 'status/report' _group_, see the [sr\_check\_status() script function](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#sr_check_status) for more details. If missing, all the groups will be listed.
+*   an optional 'identifier'. If missing, all the identifiers within the group will be listed.
+
+**Output**: the reports/logs for the requested identifiers, or for all identifiers within the groups.
+
+Examples of usage:
+
+#bin/opensips-cli -x mi sr\_list\_reports 
+\[
+    {
+        "Name": "drouting",
+        "Identifiers": \[
+            {
+                "Name": "Default",
+                "Reports": \[
+                    {
+                        "Timestamp": 1644396830,
+                        "Date": "Wed Feb  9 10:53:50 2022",
+                        "Log": "starting DB data loading"
+                    },
+                    {
+                        "Timestamp": 1644396830,
+                        "Date": "Wed Feb  9 10:53:50 2022",
+                        "Log": "DB data loading successfully completed"
+                    },
+                    {
+                        "Timestamp": 1644396830,
+                        "Date": "Wed Feb  9 10:53:50 2022",
+                        "Log": "2 gateways loaded (0 discarded), 2 carriers loaded (0 discarded), 1 rules loaded (0 discarded)"
+                    }
+                \]
+            }
+        \]
+    },
+    {
+        "Name": "test",
+        "Identifiers": \[
+            {
+                "Name": "main",
+                "Reports": \[\]
+            }
+        \]
+    },
+    {
+        "Name": "core",
+        "Identifiers": \[
+            {
+                "Name": "main",
+                "Reports": \[
+                    {
+                        "Timestamp": 1644396830,
+                        "Date": "Wed Feb  9 10:53:50 2022",
+                        "Log": "initializing"
+                    },
+                    {
+                        "Timestamp": 1644396830,
+                        "Date": "Wed Feb  9 10:53:50 2022",
+                        "Log": "initialization completed, ready now"
+                    }
+                \]
+            }
+        \]
+    }
+\]
+
+#### 18. sr\_list\_identifiers [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#sr_list_identifiers)
+
+Command to list all the existing identifiers in OpenSIPS or only from a certain group.
+
+**Arguments**:
+
+*   an optional 'status/report' _group_, see the [sr\_check\_status() script function](https://www.opensips.org/Documentation/Script-CoreFunctions-3-3#sr_check_status) for more details. If missing, the identifiers from all the groups will be listed.
+
+**Output**: an array of groups, each group being an array of identifiers .
+
+Examples of usage:
+
+#opensips-cli -x mi sr\_list\_identifiers
+\[
+    {
+        "Group": "clusterer",
+        "Identifiers": \[
+            "sharing\_tags"
+        \]
+    },
+    {
+        "Group": "dispatcher",
+        "Identifiers": \[
+            "default;events",
+            "default"
+        \]
+    },
+    {
+        "Group": "drouting",
+        "Identifiers": \[
+            "Default;events",
+            "Default"
+        \]
+    },
+    {
+        "Group": "dialplan",
+        "Identifiers": \[
+            "default"
+        \]
+    },
+    {
+        "Group": "core",
+        "Identifiers": \[
+            "main"
+        \]
+    }
+\]
+#opensips-cli -x mi sr\_list\_identifiers drouting
+{
+    "Group": "drouting",
+    "Identifiers": \[
+        "Default;events",
+        "Default"
+    \]
+}
+
+#### 19. uptime [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#uptime)
+
+Prints various time information about **OpenSIPS** - when it started to run, for how long it runs.  
+**Arguments**: none  
+**Output**: three items: "Now" - current time; "Up since" - start time ; "Up time" - number of seconds since started.
+
+Examples of usage:
+
+    # opensips-cli -x mi uptime
+{
+    "Now": "Mon Jul 21 17:41:03 2008",
+    "Up since": "Mon Jul 21 17:36:33 2008",
+    "Up time": "270 \[sec\]"
+}
+
+#### 20. version [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#version)
+
+Prints the version string of a running**OpenSIPS**.  
+**Arguments**: none  
+**Output**: one item (named "Server") containing the version string.
+
+Examples of usage:
+
+    # opensips-cli -x mi version
+{
+    "Server": "OpenSIPS (3.6.0-dev (x86\_64/linux))"
+}
+
+#### 21. which [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#which)
+
+Prints all available MI commands from the queried **OpenSIPS**instance.  
+**Arguments**: none  
+**Output**: an array of the names of available MI commands. NOTE that the list of available MI commands may differ depending of what modules your **OpenSIPS** is using.
+
+Examples of usage:
+
+    # opensips-cli -x mi which
+\[
+    "get\_statistics",
+    "list\_statistics",
+    "reset\_statistics",
+    "uptime",
+    "version",
+    "pwd",
+    "arg",
+    "which",
+    "ps",
+    "kill",
+    "log\_level",
+    "xlog\_level",
+    "shm\_check",
+    "cache\_store",
+    "cache\_fetch",
+    "cache\_remove",
+    "event\_subscribe",
+    "events\_list",
+...
+
+#### 22. get\_statistics [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#get_statistics)
+
+Prints the statistics (all, group or one) realtime values.  
+**Arguments**:
+
+*   _statistics_ - an array of the following possible values:
+    *   "all" - print all available statistics;
+    *   "group\_name:" - print only statistics from a certain group named "group\_name"; the **OpenSIPS** core defines the following groups: _core_, _shmem_; Modules export groups typically named like the module itself.
+    *   "name" - print only the statistic named "name".
+
+**Output**: an object containing the names and values of statistic variables.
+
+Examples of usage:
+
+    # opensips-cli -x mi get\_statistics rcv\_requests
+   {
+       "core:rcv\_requests": 35243
+   }
+    # opensipsc-cli -x mi get\_statistics shmem:      
+    {
+        "shmem:total\_size": 1073741824,
+        "shmem:max\_used\_size": 3389232,
+        "shmem:free\_size": 1070352592,
+        "shmem:used\_size": 2808952,
+        "shmem:real\_used\_size": 3389232,
+        "shmem:fragments": 3769
+    }
+    # opensips-cli -x mi get\_statistics shmem: core:
+    ....
+
+#### 23. list\_statistics [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#list_statistics)
+
+Prints a list of available statistics in the current configuration of OpenSIPS. **Arguments**:
+
+*   _statistics_ (optional) - an array of the same possible values as for **get\_statistics** MI command, with the exception of "all". Omitting the parameter will list all available statistics.
+
+Examples of usage:
+
+    # opensips-cli -x mi list\_statistics
+{
+    "shmem:total\_size": "non-incremental",
+    "shmem:max\_used\_size": "non-incremental",
+    "shmem:free\_size": "non-incremental",
+    "shmem:used\_size": "non-incremental",
+    "shmem:real\_used\_size": "non-incremental",
+    "shmem:fragments": "non-incremental",
+    "rpmem:rpm\_total\_size": "non-incremental",
+    "rpmem:rpm\_used\_size": "non-incremental",
+...
+
+#### 24. reset\_statistics [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#reset_statistics)
+
+Reset (to zero) the value of a statistic variable. Note that not all variables allow reset (depending of the nature of the information they carry - example "shmem:used\_size").  
+**Arguments**:
+
+*   _statistics_ - an array of the names of the variables to be reset.
+
+**Output**: none.
+
+Examples of usage:
+
+    # opensips-cli -x mi get\_statistics received\_replies
+   {
+       "tm:received\_replies": 14543
+   }
+    # opensips-cli -x mi reset\_statistics received\_replies
+    # opensips-cli -x mi get\_statistics received\_replies
+   {
+       "tm:received\_replies": 0
+   }
+
+#### 25. reset\_all\_statistics [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#reset_all_statistics)
+
+Reset (to zero) the value of all statistic variables that can be reset. Note that not all variables allow reset (depending of the nature of the information they carry - example "shmem:used\_size").  
+**Output**: none.
+
+Examples of usage:
+
+    # opensips-cli -x mi reset\_all\_statistics
+
+#### 26. cache\_store [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#cache_store)
+
+This command stores in a cache system a string value.  
+**Arguments**:
+
+*   _system_ - cache system to use - for the cache system implemented by **OpenSIPS** module 'localcache' the value of this parameter should be 'local';
+*   _attr_ - the label to be associated with this value;
+*   _value_ - the string to be stored;
+*   _expire_ (optional) - expire time for the stored value;
+
+**Output**: none.  
+Examples of usage:
+
+    # opensips-cli -x mi cache\_store local password\_user1 password
+
+#### 27. cache\_fetch [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#cache_fetch)
+
+This command queries for a stored value.  
+**Arguments**:
+
+*   _system_ - cache system to use - for the cache system implemented by **OpenSIPS** module 'localcache' the value of this parameter should be 'local'
+*   _attr_ - the label associated with the value
+
+**Output**: object containing the value if a record is found or 'Value not found' string otherwise.  
+Examples of usage:
+
+    # opensips-cli -x mi cache\_fetch local password\_user1
+
+#### 28. cache\_remove [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#cache_remove)
+
+This command removes a record from the cache system.  
+**Arguments**:
+
+*   _system_ - cache system to use;
+*   _attr_ - the label associated with the stored value;
+
+**Output**: None.  
+Examples of usage:
+
+    # opensips-cli -x mi cache\_remove local password\_user1
+
+#### 29. event\_subscribe [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#event_subscribe)
+
+Subscribes an external application to a certain event.  
+**Arguments**:
+
+*   _event_ - event name
+*   _socket_ - external application socket
+*   _expire_ (optional) - expire time, in seconds - if absent, the subscription is valid only one hour (3600 s)
+
+**Output**: None.  
+Examples of usage:
+
+    # opensips-cli -x mi event\_subscribe E\_PIKE\_BLOCKED udp:127.0.0.1:8888 1200
+
+#### 30. events\_list [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#events_list)
+
+Lists all the events published through the Event Interface.  
+**Arguments**: None.  
+**Output**: None.  
+Examples of usage:
+
+    # opensips-cli -x mi events\_list
+{
+    "Events": \[
+        {
+            "name": "E\_CORE\_THRESHOLD",
+            "id": 0
+        },
+        {
+            "name": "E\_CORE\_SHM\_THRESHOLD",
+            "id": 1
+        },
+        {
+            "name": "E\_CORE\_PKG\_THRESHOLD",
+            "id": 2
+        },
+...
+
+#### 31. raise\_event [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#raise_event)
+
+Raises an event through the Event Interface using an MI command.  
+**Arguments**:
+
+*   _event_ - event name
+*   _params_ (optional) - array of elements, or a string consisting of a JSON object containing key-value pairs
+
+**Output**: None.  
+Examples of usage:
+
+    # opensips-cli -x mi raise\_event E\_PIKE\_BLOCKED 127.0.0.1 # array mode
+    # opensips-cli -x -- mi -j raise\_event event=E\_PIKE\_BLOCKED params='{"ip":"127.0.0.1"}' # json mode
+
+#### 32. subscribers\_list [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#subscribers_list)
+
+Lists information about the subscribers  
+**Arguments**:
+
+*   _event_ - event name
+*   _socket_ (optional) - external application socket
+
+**Output**: If no parameter is specified, then the command returns information about all events and their subscribers. If the event is specified, only the external applications subscribed for that event are returned. If the socket is also specified, only one subscriber information is returned.  
+Examples of usage:
+
+    # opensips-cli -x mi subscribers\_list
+{
+  "Events": \[{
+	  "name": "E\_RTPPROXY\_STATUS",
+	  "id": 1,
+	  "subscribers": \[
+		...
+	  \]
+	},
+	{
+	  "name": "E\_PIKE\_BLOCKED",
+	  "id": 2,
+	  "subscribers": \[
+		...
+	  \]
+	}
+  \]
+}
+
+    # opensips-cli -x mi subscribers\_list E\_RTPPROXY\_STATUS
+{
+  "Event": {
+	"name": "E\_RTPPROXY\_STATUS",
+	"id": 1,
+	"subscribers": \[{
+		  "socket": "unix:/tmp/event.sock",
+		  "expire": "never",
+		},
+		{
+		  "socket": "udp:127.0.0.1:8888",
+		  "expire": 1100,
+		  "ttl": 1046
+		}
+	\]
+  } 
+}
+
+    # opensips-cli -x mi subscribers\_list E\_RTPPROXY\_STATUS unix:/tmp/event.sock
+{
+  "Event": {
+	"name": "E\_RTPPROXY\_STATUS",
+	"id": 1,
+	"Subscriber": {
+	  "socket": "unix:/tmp/event.sock",
+	  "expire": "never"
+	}
+  } 
+}
+
+#### 33. mem\_pkg\_dump [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#mem_pkg_dump)
+
+Triggers a pkg memory dump for a given process. The memory dump will written to OpenSIPS's log (syslog or stderr) using the 'memdump' logging level. The global 'memdump' log level may be overwritten by a custom value provided as argument to this command.  
+**Arguments**:
+
+*   _pid_ - the PID of the process to perform the pkg dump
+*   _log\_level_ (optional) - a log level to be used for this dump
+
+**Output**: None.  
+Examples of usage:
+
+    # opensips-cli -x mi mem\_pkg\_dump 11854 -1
+
+The processes without IPC support (like timer and per-module processes) will not be able to generate a memory dump.
+
+#### 34. mem\_shm\_dump [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#mem_shm_dump)
+
+Triggers a shm memory dump. The memory dump will written to OpenSIPS's log (syslog or stderr) using the 'memdump' logging level. The global 'memdump' log level may be overwritten by a custom value provided as argument to this command.  
+**Arguments**:
+
+*   _log\_level_ (optional) - a log level to be used for this dump
+
+**Output**: None.  
+Examples of usage:
+
+    # opensips-cli -x mi mem\_shm\_dump -1
+
+#### 35. shm\_check [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#shm_check)
+
+Only available with _QM\_MALLOC_ + _DBG\_MALLOC_. Fully scans the shared memory pool in order to locate any inconsistencies. If any sign of memory corruption is detected, OpenSIPS will immediately abort.  
+**Arguments**: None  
+**Output**: current number of fragments.  
+Example of usage:
+
+    # opensips-cli -x mi shm\_check
+
+#### 36. xlog\_level \[level\] [🔗](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#xlog_lelvel)
+
+Get or set the global xlogging level in OpenSIPS processes. If no argument is passed to the **xlog\_level** command, it will print the current **xlog\_level**. If a logging **level** is given, it will be globally set for all OpenSIPS processes.  
+**Arguments**:
+
+*   _level_ (optional)
+
+Example of usage:
+
+    # opensips-cli -x mi xlog\_level -2
+
+* * *
+
+
+
+ |

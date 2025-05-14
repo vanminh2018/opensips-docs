@@ -1,0 +1,138 @@
+Title: openSIPS | Documentation / Templating opensips.cfg Files
+
+URL Source: https://www.opensips.org/Documentation/Templating-Config-Files-3-6
+
+Markdown Content:
+##### Documentation -\> [Manuals](https://www.opensips.org/Documentation/Manuals "Manuals") -\> [Manual devel](https://www.opensips.org/Documentation/Manual-3-6 "OpenSIPS Manual - 3.6") -\> Templating opensips.cfg Files
+
+This page has been visited 787 times.
+
+* * *
+
+Pages for other versions: devel [3.5](https://www.opensips.org/Documentation/Templating-Config-Files-3-5 "Templating opensips.cfg Files - 3.5") [3.4](https://www.opensips.org/Documentation/Templating-Config-Files-3-4 "Templating opensips.cfg Files - 3.4") Older versions: [3.3](https://www.opensips.org/Documentation/Templating-Config-Files-3-3 "Templating opensips.cfg Files - 3.3") [3.2](https://www.opensips.org/Documentation/Templating-Config-Files-3-2 "Templating opensips.cfg Files - 3.2") [3.1](https://www.opensips.org/Documentation/Templating-Config-Files-3-1 "Templating opensips.cfg Files - 3.1") [3.0](https://www.opensips.org/Documentation/Templating-Config-Files-3-0 "Templating opensips.cfg Files - 3.0")
+
+**Templating opensips.cfg Files v3.6**
+
+* * *
+
+**Table of Content** (hide)
+
+1.  1. [Generic Preprocessing Support](https://www.opensips.org/Documentation/Templating-Config-Files-3-6#toc1)
+2.  2. [Common Templating Languages + Examples](https://www.opensips.org/Documentation/Templating-Config-Files-3-6#toc2)
+    1.  2.1 [GNU m4](https://www.opensips.org/Documentation/Templating-Config-Files-3-6#toc3)
+    2.  2.2 [Jinja2](https://www.opensips.org/Documentation/Templating-Config-Files-3-6#toc4)
+    3.  2.3 [Embedded Ruby](https://www.opensips.org/Documentation/Templating-Config-Files-3-6#toc5)
+3.  3. [Debugging Preprocessor Output](https://www.opensips.org/Documentation/Templating-Config-Files-3-6#toc6)
+
+1.  Generic Preprocessing Support
+---------------------------------
+
+OpenSIPS 3.0+ releases offer script writers full support for piping the _opensips.cfg_ file (including any other files imported by it) to a generic preprocessing command. This may be useful in scenarios where _opensips.cfg_ must be parameterized (e.g. listening interfaces, ports, DB connectors, etc.) and deployed to multiple servers, in an automated fashion. The system administrator may achieve this using the "-p <cmdline\>" (preprocessor) option. For example:
+
+opensips -f opensips.cfg -p /bin/cat
+
+... is a basic use of the "-p" option, by supplying it with an "echo" preprocessor that receives input via **standard input** and mirrors it to **standard output**. From here, it's just a matter of choosing a templating language which fits the deployment requirements. Some basic substitutions can be done using, for example, _sed_:
+
+opensips -f opensips.cfg -p "/bin/sed s/PRIVATE\_IP/10.0.0.10/g"
+
+2.  Common Templating Languages + Examples
+------------------------------------------
+
+Below are some examples of using more advanced templating languages on top of opensips.cfg, for cases where the target environment requires complex decision-making (if statements which enable/disable features, for loops over multiple listening interfaces, etc.).
+
+### 2.1  GNU m4
+
+[GNU m4](https://www.gnu.org/software/m4/) is a simplistic preprocessor with a mild learning curve, equipped with textual substitution, if statements and file includes among the most notable features. Here is an example integration with _opensips.cfg_:
+
+listen = udp:PRIVATE\_IP:5060
+loadmodule "proto\_udp.so"
+
+**opensips.cfg.m4**
+
+divert(-1)
+define(\`PRIVATE\_IP', \`127.0.0.1')
+divert(0)dnl
+
+**env.m4**
+
+... and we start OpenSIPS using the below command, which will pipe _opensips.cfg.m4_ to _m4_'s standard input, and then read the resulting file from its standard output:
+
+opensips -f opensips.cfg.m4 -p "m4 env.m4 -"
+
+### 2.2  Jinja2
+
+[Jinja2](http://jinja.pocoo.org/docs/2.10) is a modern templating language with a rich feature set, including textual replacement, if statements, for loops, a plethora of filters, file includes, and the list goes on! Unlike _m4_, Jinja2 does not currently have a standalone binary, rather it is provided via a Python package. Here is a way of integrating it with _opensips.cfg_:
+
+First, install the **jinja2** Python module with: **"pip install jinja2"**. Next, prepare the files:
+
+listen = udp:{{ private\_ip }}:5060
+loadmodule "proto\_udp.so"
+
+**opensips.cfg.j2**
+
+import sys
+import json
+from jinja2 import Template
+
+t = Template("".join(sys.stdin.readlines()))
+
+with open('env.json') as f:
+    print(t.render(json.load(f)))
+
+**opensips-preproc.py**
+
+{
+    "private\_ip": "127.0.0.1"
+}
+
+**env.json**
+
+... and we start OpenSIPS using:
+
+opensips -f opensips.cfg.j2 -p "python opensips-preproc.py"
+
+### 2.3  Embedded Ruby
+
+[Embedded Ruby (ERB)](https://ruby-doc.org/stdlib-2.6.1/libdoc/erb/rdoc/ERB.html) provides an easy to use, powerful templating system for Ruby. Using ERB, actual Ruby code can be added to any plain text document for the purposes of generating document information details and/or flow control. Let's see how it integrates with _opensips.cfg_!
+
+First, install the ERB package (for Debian/Ubuntu: **"apt install ruby-ejs"**). Next, prepare the files:
+
+listen = udp:<%= private\_ip %\>:5060
+loadmodule "proto\_udp.so"
+
+**opensips.cfg.erb**
+
+#!/usr/bin/env ruby
+require 'erb'
+require './env.rb'
+
+template = ERB.new($stdin.read, nil, '-')
+$stdout.write template.result($erb\_context)
+
+**~/src/opensips-preproc.rb**
+
+$erb\_context = binding
+private\_ip   = '127.0.0.1'
+
+**env.rb**
+
+... and OpenSIPS is now started using:
+
+opensips -f opensips.cfg.erb -p "ruby opensips-preproc.rb"
+
+3.  Debugging Preprocessor Output
+---------------------------------
+
+Since the output of the preprocessor is never written to any file and is just consumed by OpenSIPS on each run, script developers may still visualize and debug the generated file during development by using a wrapper script over the preprocessing command such as the following:
+
+#!/bin/bash
+
+m4 env.m4 - | tee \>(grep -v \_\_OSSPP\_ \>/tmp/opensips.cfg)
+
+**~/src/preprocessor.sh**
+
+... and now we start OpenSIPS using:
+
+opensips -f opensips.cfg.m4 -p ~/src/preprocessor.sh
+
+The same technique can be used for any other preprocessor.

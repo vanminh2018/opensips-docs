@@ -1,0 +1,76 @@
+Title: openSIPS | Documentation / Management Interface
+
+URL Source: https://www.opensips.org/Documentation/Interface-StatusReport-3-6
+
+Markdown Content:
+##### Documentation -\> [Manuals](https://www.opensips.org/Documentation/Manuals "Manuals") -\> [Manual devel](https://www.opensips.org/Documentation/Manual-3-6 "OpenSIPS Manual - 3.6") -\> Status/Report Interface
+
+* * *
+
+Pages for other versions: devel [3.5](https://www.opensips.org/Documentation/Interface-MI-3-5 "Management Interface - 3.5") [3.4](https://www.opensips.org/Documentation/Interface-MI-3-4 "Management Interface - 3.4") Older versions: [3.3](https://www.opensips.org/Documentation/Interface-MI-3-3 "Management Interface - 3.3") [3.2](https://www.opensips.org/Documentation/Interface-MI-3-2 "Management Interface - 3.2") [3.1](https://www.opensips.org/Documentation/Interface-MI-3-1 "Management Interface - 3.1") [3.0](https://www.opensips.org/Documentation/Interface-MI-3-0 "Management Interface - 3.0") [2.4](https://www.opensips.org/Documentation/Interface-MI-2-4 "Management Interface - devel") [2.3](https://www.opensips.org/Documentation/Interface-MI-2-3 "Management Interface - devel") [2.2](https://www.opensips.org/Documentation/Interface-MI-2-2 "Management Interface - 2.2") [2.1](https://www.opensips.org/Documentation/Interface-MI-2-1 "Management Interface - devel") [1.11](https://www.opensips.org/Documentation/Interface-MI-1-11 "Management Interface - 1.11") [1.10](https://www.opensips.org/Documentation/Interface-MI-1-10 "Management Interface - ver 1.10") [1.9](https://www.opensips.org/Documentation/Interface-MI-1-9 "Management Interface - ver 1.9") [1.8](https://www.opensips.org/Documentation/Interface-MI-1-8 "Management Interface - ver 1.8") [1.7](https://www.opensips.org/Documentation/Interface-MI-1-7 "Management Interface - ver 1.7") [1.6](https://www.opensips.org/Documentation/Interface-MI-1-6 "Management Interface - ver 1.6") [1.5](https://www.opensips.org/Documentation/Interface-MI-1-5 "Management Interface - ver 1.5") [1.4](https://www.opensips.org/Documentation/Interface-MI-1-4 "Management Interface - ver 1.4")
+
+**Status/Report Interface v3.6**
+
+* * *
+
+The **Status/Report** (or **SR**) is an OpenSIPS framework that allows different components of OpenSIPS (like modules, parts of the core) to publish their status (in terms of readiness) and reports (logs) relevant to their activities.  
+This framework is intended to be used in operational activities, to check the readiness of OpenSIPS when starting up, to monitor its status at runtime and to trace back its operations via the logs/reports.
+
+#### Overview
+
+The base element in the **Status/Report** framework is the _identifier_ - an status and some reports may be attached to an identifier. All the identifiers do exist within a **Status/Report** group. So, a group is a set of identifiers - a module or a core may be such groups. For example the _drouting_ module publishes the _drouting_ group where each routing partition is an _identifier_.  
+As there are cases where the group (the modules) do not need multiple identifiers, there is a default _main_ identifier - such identifier may be referred only by the name of the group.
+
+The information attached to an identifier is:
+
+*   **status** as integer value, translating if the identifier is ready for operation or not; a strict negative value means not-ready, while a strict positive value means it is ready; a zero value is not accepted.
+*   **status details** is a optional text to the status, providing some human friendly (or details) information in regards to the current status.
+*   **reports** is a fix-size array (rather a queue discarding the oldest records) of logs produced by the identifier. Each report/log is produced with a timestamp also.
+
+I most of the cases, the status and reports of an identifier are internally produced by the OpenSIPS code - the **Status/Report** interface just gives you access to the status / report information from outside the code, for monitoring purposes.
+
+* * *
+
+#### Scripting functions
+
+The SR Interface provides a script function to check the readiness status of an identifier (or of an entire group), see the [sr\_check\_status( group, \[identifier\])](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#sr_check_status) function.
+
+* * *
+
+#### MI functions
+
+The SR Interface provides multiple functions to check/list the status of one/multiple identifiers and to list their reports:
+
+*   [sr\_get\_status](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#sr_get_status)
+*   [sr\_list\_status](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#sr_list_status)
+*   [sr\_list\_reports](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#sr_list_reports)
+*   [sr\_list\_identifiers](https://www.opensips.org/Documentation/Interface-CoreMI-3-6#sr_list_identifiers)
+
+* * *
+
+#### Events
+
+The SR framework raises an event each time the status of a Status/Report identifier changes. See the [E\_CORE\_SR\_STATUS\_CHANGED event](https://www.opensips.org/Documentation/Interface-CoreEvents-3-6#E_CORE_SR_STATUS_CHANGED) for more details.
+
+* * *
+
+#### Core identifiers
+
+The OpenSIPS core provides the **core** group, with a "main" (default) identifier. The available status are:
+
+*   STATE\_NONE (-100) - OpenSIPS just started
+*   STATE\_TERMINATING (-2) - OpenSIPS is shutdown sequence
+*   STATE\_INITIALIZING (-1) - OpenSIPS in startup sequence
+*   STATE\_RUNNING (1) - OpenSIPS fully up and running
+
+* * *
+
+#### Modules identifiers
+
+The OpenSIPS modules may or may not provide their own groups and identifiers. For this you need to check the module's documentation.
+
+* * *
+
+#### Scripting identifiers
+
+The [status\_report](https://opensips.org/docs/modules/3.6.x/status_report.html) allow the creation of custom SR identifiers from script level. Even more, it is possible to set the status or to publish a report from script for such custom identifiers.

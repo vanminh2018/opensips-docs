@@ -1,0 +1,1071 @@
+Title: openSIPS | Documentation / Core Functions
+
+URL Source: https://www.opensips.org/Documentation/Script-CoreFunctions-3-6
+
+Markdown Content:
+| Documentation
+
+*   [Manuals](https://www.opensips.org/Documentation/Manuals "Manuals")
+*   [Advanced Tutorials](https://www.opensips.org/Documentation/Tutorials "Tutorials")
+*   [Tips & FAQ](https://www.opensips.org/Documentation/TipsFAQ "TipsFAQ")
+*   [Version Migration](https://www.opensips.org/Documentation/Migration "Migration")
+*   [OpenSIPS Webinars](https://www.opensips.org/Documentation/Webinars "Webinars")
+*   [Troubleshooting](https://www.opensips.org/Documentation/Troubleshooting "Troubleshooting")
+*   [OpenSIPS Tools](https://www.opensips.org/Documentation/Tools "Tools")
+*   [Devel Tutorial](https://www.opensips.org/Documentation/Development-Tutorials "Development-Tutorials")
+
+ | 
+
+##### Documentation -\> [Manuals](https://www.opensips.org/Documentation/Manuals "Manuals") -\> [Manual devel](https://www.opensips.org/Documentation/Manual-3-6 "OpenSIPS Manual - 3.6") -\> Core functions
+
+* * *
+
+Pages for other versions: devel [3.5](https://www.opensips.org/Documentation/Script-CoreFunctions-3-5 "Core Functions - 3.5") [3.4](https://www.opensips.org/Documentation/Script-CoreFunctions-3-4 "Core Functions - 3.4") Older versions: [3.3](https://www.opensips.org/Documentation/Script-CoreFunctions-3-3 "Core Functions - 3.3") [3.2](https://www.opensips.org/Documentation/Script-CoreFunctions-3-2 "Core Functions - 3.2") [3.1](https://www.opensips.org/Documentation/Script-CoreFunctions-3-1 "Core Functions - 3.1") [3.0](https://www.opensips.org/Documentation/Script-CoreFunctions-3-0 "Core Functions - 3.0") [2.4](https://www.opensips.org/Documentation/Script-CoreFunctions-2-4 "Core Functions - 2.4") [2.3](https://www.opensips.org/Documentation/Script-CoreFunctions-2-3 "Core Functions - 2.3") [2.2](https://www.opensips.org/Documentation/Script-CoreFunctions-2-2 "Core Functions - 2.2") [2.1](https://www.opensips.org/Documentation/Script-CoreFunctions-2-1 "Core Functions - 2.1") [1.11](https://www.opensips.org/Documentation/Script-CoreFunctions-1-11 "Core Functions - 1.11") [1.10](https://www.opensips.org/Documentation/Script-CoreFunctions-1-10 "Core Functions - ver 1.10") [1.9](https://www.opensips.org/Documentation/Script-CoreFunctions-1-9 "Core Functions - ver 1.9") [1.8](https://www.opensips.org/Documentation/Script-CoreFunctions-1-8 "Core Functions - ver 1.8") [1.7](https://www.opensips.org/Documentation/Script-CoreFunctions-1-7 "Core Functions - ver 1.7") [1.6](https://www.opensips.org/Documentation/Script-CoreFunctions-1-6 "Core Functions - ver 1.6") [1.5](https://www.opensips.org/Documentation/Script-CoreFunctions-1-5 "Core Functions - ver 1.5") [1.4](https://www.opensips.org/Documentation/Script-CoreFunctions-1-4 "Core Functions - ver 1.4")
+
+**Core functions v3.6**
+
+* * *
+
+**Table of Contents** (hide)
+
+1.  1. [add\_local\_rport()](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc1)
+2.  2. [assert()](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc2)
+3.  3. [append\_branch(\[uri\], \[qvalue\])](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc3)
+4.  4. [avp\_print()](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc4)
+5.  5. [cache\_store(storage\_id, attribute, value, \[timeout\])](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc5)
+6.  6. [cache\_remove(storage\_id, attribute)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc6)
+7.  7. [cache\_fetch(storage\_id, attribute, result)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc7)
+8.  8. [cache\_counter\_fetch(storage\_id, counter\_attribute, result)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc8)
+9.  9. [cache\_add( storage\_id, attribute, increment, expire, \[new\_val\])](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc9)
+10.  10. [cache\_sub(storage\_id, attribute, decrement, expire, \[new\_val\])](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc10)
+11.  11. [cache\_raw\_query(storage\_id, raw\_query, result)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc11)
+12.  12. [break()](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc12)
+13.  13. [construct\_uri(proto,\[user\],domain,\[port\],\[extra\],result)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc13)
+14.  14. [drop()](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc14)
+15.  15. [exit()](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc15)
+16.  16. [force\_rport()](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc16)
+17.  17. [force\_send\_socket(proto:address\[:port\])](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc17)
+18.  18. [force\_tcp\_alias(\[port\_alias\])](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc18)
+19.  19. [forward(destination)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc19)
+20.  20. [get\_timestamp(sec\_avp,usec\_avp)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc20)
+21.  21. [isdsturiset()](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc21)
+22.  22. [isflagset(string)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc22)
+23.  23. [isbflagset(flag, \[branch\_idx\])](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc23)
+24.  24. [is\_myself(host, \[port\])](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc24)
+25.  25. [log(\[level,\] string)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc25)
+26.  26. [move\_branch(\[src\_idx\], \[dst\_idx\] \[, keep\])](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc26)
+27.  27. [next\_branches()](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc27)
+28.  28. [prefix(str)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc28)
+29.  29. [pv\_printf(pv, fmt\_str)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc29)
+30.  30. [raise\_event(event, \[attrs\], \[vals\])](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc30)
+31.  31. [remove\_branch(branch\_idx)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc31)
+32.  32. [return(int)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc32)
+33.  33. [resetdsturi()](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc33)
+34.  34. [resetflag(flag)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc34)
+35.  35. [resetbflag(flag, \[branch\_idx\])](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc35)
+36.  36. [revert\_uri()](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc36)
+37.  37. [set\_via\_handling(flags)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc37)
+38.  38. [sethost(host)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc38)
+39.  39. [sethostport(hostport)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc39)
+40.  40. [setuser(user)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc40)
+41.  41. [setuserpass(pass)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc41)
+42.  42. [setport(port)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc42)
+43.  43. [seturi(str)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc43)
+44.  44. [route(name \[, param1 \[, param2 \[, ...\] \] \] )](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc44)
+45.  45. [script\_trace(\[log\_level, pv\_format\_string, \[info](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc45)) \]\]
+46.  46. [send(destination \[, headers\])](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc46)
+47.  47. [serialize\_branches(clear\_previous\[, keep\_order\])](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc47)
+48.  48. [set\_advertised\_address(adv\_addr)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc48)
+49.  49. [set\_advertised\_port(adv\_port)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc49)
+50.  50. [setdsturi(uri)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc50)
+51.  51. [setflag(flag)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc51)
+52.  52. [setbflag(flag, \[branch\_idx\])](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc52)
+53.  53. [sr\_check\_status( group, \[identifier\])](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc53)
+54.  54. [strip(n)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc54)
+55.  55. [strip\_tail(n)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc55)
+56.  56. [subscribe\_event(string, string \[, int\])](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc56)
+57.  57. [swap\_branches(\[br1\_idx\], \[br2\_idx\])](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc57)
+58.  58. [use\_blacklist(bl\_name)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc58)
+59.  59. [unuse\_blacklist(bl\_name)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc59)
+60.  60. [check\_blacklist\_rule(\[bl\_name\], ip\[, port \[, proto](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc60)) \]\]
+61.  61. [add\_blacklist\_rule(\[bl\_name\], ip\[, port \[, proto \[, expire](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc61)\]) \]\]
+62.  62. [del\_blacklist\_rule(\[bl\_name\], ip\[, port \[, proto](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc62)) \]\]
+63.  63. [xlog(\[log\_level, \]format\_string)](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#toc63)
+
+This section lists the all the functions exported by **OpenSIPS** core for script usage (to be used in opensips.cfg)
+
+#### 1. add\_local\_rport() [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#add_local_rport)
+
+Add 'rport' parameter to the Via header generated by server (see RFC3581 for its meaning). It affects only the current processed request.
+
+Example of usage:
+
+    add\_local\_rport()
+
+#### 2. assert() [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#assert)
+
+Only works if [enable\_asserts](http://www.opensips.org/Documentation/Script-CoreParameters-3-6#toc53) is set to _true_. If the given expression evaluates to _false_, script execution is stopped and the [error\_route](http://www.opensips.org/Documentation/Script-Routes-3-6#toc5) is executed. If [abort\_on\_assert](http://www.opensips.org/Documentation/Script-CoreParameters-3-6#toc24) is enabled, OpenSIPS will also shutdown.
+
+Example of usage:
+
+    assert($ua != "friendly-scanner", "Forbidden UA: \\"friendly-scanner\\"");
+
+#### 3. append\_branch(\[uri\], \[qvalue\]) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#append_branch)
+
+Similarly to t\_fork\_to, it extends destination set by a new entry. The difference is that current URI is taken as new entry.
+
+Without parameter, the function copies the current URI into a new branch. Thus, leaving the main branch (the URI) for further manipulation.
+
+With a parameter, the function copies the URI in the parameter into a new branch. Thus, the current URI is not manipulated.
+
+Note that it's not possible to append a new branch in "on\_failure\_route" block if a 6XX response has been previously received (it would be against RFC 3261).
+
+Parameters:
+
+*   _uri_ (string, optional)
+*   _qvalue_ (string, optional)
+
+Example of usage:
+
+    # if someone calls B, the call should be forwarded to C too.
+    #
+    if ($rm=="INVITE" && $ru=~"sip:B@xx.xxx.xx ")
+    {
+        # copy the current branch (branches\[0\]) into
+        # a new branch (branches\[1\])
+        append\_branch();
+        # all URI manipulation functions work on branches\[0\]
+        # thus, URI manipulation does not touch the 
+        # appended branch (branches\[1\])
+        seturi("sip:C@domain");
+
+        # now: branch 0 = C@domain
+        #      branch 1 = B@xx.xx.xx.xx
+
+        # and if you need a third destination ...
+
+        # copy the current branch (branches\[0\]) into
+        # a new branch (branches\[2\])
+        append\_branch();
+
+        # all URI manipulation functions work on branches\[0\]
+        # thus, URI manipulation does not touch the 
+        # appended branch (branches\[1-2\])
+        seturi("sip:D@domain");
+
+        # now: branch 0 = D@domain
+        #      branch 1 = B@xx.xx.xx.xx
+        #      branch 2 = C@domain
+
+        t\_relay();
+        exit;
+    };
+
+    # You could also use append\_branch("sip:C@domain") which adds a branch with the new URI:
+
+
+    if(method=="INVITE" && uri=~"sip:B@xx.xxx.xx ") {
+        # append a new branch with the second destination
+        append\_branch("sip:user@domain");
+        # now: branch 0 = B@xx.xx.xx.xx
+        # now: branch 1 = C@domain
+
+        t\_relay();
+        exit;
+}
+
+#### 4. avp\_print() [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#avp_print)
+
+Prints the list with all the AVPs from memory. This is only a helper/debug function.
+
+#### 5. cache\_store(storage\_id, attribute, value, \[timeout\]) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#cache_store)
+
+This sets in a memory-cache-like storage system a new value for an attribute. If the attribute does not already exist in the memcache, it will be inserted with the given value; if already present, its value will be replaced with the new one. The function may optionally take an extra parameter, a timeout (or lifetime) value for the attribute - after the lifetime is exceeded, the attribute is automatically purged from memcache. If "timeout" is omitted or has a value or 0, the attribute/value pair will never expire.
+
+Function returns true if the new attribute was successfully inserted.
+
+Parameters:
+
+*   _storage\_id_ (string)
+*   _attribute_ (string)
+*   _value_ (string)
+*   _timeout_ (int, optional)
+
+cache\_store("local", "total\_minutes\_$fU", "$avp(mins)", 1200);
+
+OR
+
+modparam("cachedb\_redis", "cachedb\_url", "redis:cluster1://193.668.3.634:6379/")
+...
+cache\_store("redis:cluster1", "passwd\_$tu", "$var(x)");
+
+More complex examples can be found in the [Key-Value Interface Tutorial](https://www.opensips.org/Documentation/Tutorials-KeyValueInterface "Tutorials-KeyValueInterface").
+
+#### 6. cache\_remove(storage\_id, attribute) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#cache_remove)
+
+This removes an attribute from a memory-cache-like storage system. Function returns false only if the _storage\_id_ is invalid.
+
+Parameters:
+
+*   _storage\_id_ (string)
+*   _attribute_ (string)
+
+cache\_remove("local", "total\_minutes\_$fU");
+
+OR
+
+modparam("cachedb\_redis", "cachedb\_url", "redis:cluster1://193.668.3.634:6379/")
+...
+cache\_remove("redis:cluster1", "total\_minutes\_$fU");
+
+More complex examples can be found in the [Key-Value Interface Tutorial](https://www.opensips.org/Documentation/Tutorials-KeyValueInterface "Tutorials-KeyValueInterface").
+
+#### 7. cache\_fetch(storage\_id, attribute, result) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#cache_fetch)
+
+Fetch the value of an attribute from a memory-cache-like storage system. On a successful fetch, the result will be stored in the variable specified by **result\_pv**.
+
+Function returns _true_ if the attribute was found and its value successfully returned.
+
+Parameters:
+
+*   _storage\_id_ (string)
+*   _attribute_ (string)
+*   _result\_pv_ (var)
+
+cache\_fetch("local", "credit\_$fU", $var(ret));
+
+OR
+
+modparam("cachedb\_redis", "cachedb\_url", "redis:cluster1://193.668.3.634:6379/")
+...
+cache\_fetch("redis:cluster1", "credit\_$fU", $var(ret));
+
+More complex examples can be found in the [Key-Value Interface Tutorial](https://www.opensips.org/Documentation/Tutorials-KeyValueInterface "Tutorials-KeyValueInterface").
+
+#### 8. cache\_counter\_fetch(storage\_id, counter\_attribute, result) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#cache_counter_fetch)
+
+This function fetches from a memory-cache-like storage system the value of a counter. The result (if any) will be stored in the variable specified by **result**.
+
+Function returns true if the attribute was found and its value returned.
+
+Parameters:
+
+*   _storage\_id_ (string)
+*   _attribute_ (string)
+*   _result_ (var)
+
+cache\_counter\_fetch("local", "my\_counter", $var(counter\_val));
+
+OR
+
+modparam("cachedb\_redis", "cachedb\_url", "redis:cluster1://193.668.3.634:6379/")
+...
+cache\_fetch("redis:cluster1", "my\_counter", $var(redis\_counter\_val));
+
+#### 9. cache\_add( storage\_id, attribute, increment, expire, \[new\_val\]) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#cache_add)
+
+This increments an attribute in a memory-cache-like storage system that supports such an operation. If the attribute does not exit, it will be created with the value of **increment**.
+
+Function returns false if increment fails.
+
+Parameters:
+
+*   _storage\_id_ (string)
+*   _attribute_ (string)
+*   _increment_ (int)
+*   _expire_ (int) - if greater than 0, the key will also expire in the specified number of seconds
+*   _new\_val_ (var, optional) - variable in which to fetch the new value of the counter.
+
+modparam("cachedb\_redis", "cachedb\_url", "redis:cluster1://193.668.3.634:6379/")
+...
+cache\_add("redis:cluster1", "my\_counter", 5, 0);
+
+More complex examples can be found in the [Key-Value Interface Tutorial](https://www.opensips.org/Documentation/Tutorials-KeyValueInterface "Tutorials-KeyValueInterface").
+
+#### 10. cache\_sub(storage\_id, attribute, decrement, expire, \[new\_val\]) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#cache_sub)
+
+This decrements an attribute in a memory-cache-like storage system that supports such an operation.
+
+Function returns false if decrement fails.
+
+Parameters:
+
+*   _storage\_id_ (string)
+*   _attribute_ (string)
+*   _increment_ (int)
+*   _expire_ (int) - if greater than 0, the key will also expire in the specified number of seconds
+*   _new\_val_ (var, optional) - variable in which to fetch the new value of the counter.
+
+modparam("cachedb\_redis", "cachedb\_url", "redis:cluster1://193.668.3.634:6379/")
+...
+cache\_sub("redis:cluster1", "my\_counter", 5, 0);
+
+More complex examples can be found in the [Key-Value Interface Tutorial](https://www.opensips.org/Documentation/Tutorials-KeyValueInterface "Tutorials-KeyValueInterface").
+
+#### 11. cache\_raw\_query(storage\_id, raw\_query, result) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#cache_raw_query)
+
+The function runs the provided raw query (in the back-end dependent language) and returns the results (if any) in the AVP (or AVP list) provided in _result_. This parameter may be missing, if the query returns no results.
+
+Function returns false if query fails.
+
+Parameters:
+
+*   _storage\_id_ (string)
+*   _raw\_query_ (string)
+*   _result_ (string, optional, no expand)
+
+...
+cache\_raw\_query("mongodb", "{ \\"op\\" : \\"count\\",\\"query\\": { \\"username\\" : $rU} }", "$avp(mongo\_count\_result)");
+...
+
+More complex examples can be found in the [Key-Value Interface Tutorial](https://www.opensips.org/Documentation/Tutorials-KeyValueInterface "Tutorials-KeyValueInterface").
+
+#### 12. break() [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#break)
+
+Since v0.10.0-dev3, 'break' can no longer be used to stop the execution of a route. The only place to use is to end a 'case' block in a 'switch' statement. 'return' must be now used instead of old 'break'.
+
+'return' and 'break' have now a similar meaning as in c/shell.
+
+#### 13. construct\_uri(proto,\[user\],domain,\[port\],\[extra\],result) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#construct_uri)
+
+The function builds a valid sip uri based on the arguments it receives. The result (if any) will be stored in the **result** AVP variable. If you want to omit a part of the sip uri, just omit the respective parameter.
+
+Parameters:
+
+*   _proto_ (string)
+*   _user_ (string, optional)
+*   _domain_ (string)
+*   _port_ (string, optional)
+*   _extra_ (string, optional)
+*   _result_ (var)
+
+Example usage:
+
+construct\_uri("$var(proto)", "vlad", "$var(domain)", "", "$var(params)",$avp(s:newuri));
+xlog("Constructed URI is <$avp(s:newuri)\> \\n");
+
+#### 14. drop() [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#drop)
+
+Stop the execution of the configuration script and alter the implicit action which is done afterwards.
+
+If the function is called in a 'branch\_route' then the branch is discarded (implicit action for 'branch\_route' is to forward the request).
+
+If the function is called in a 'onreply\_route' then any provisional reply is discarded (implicit action for 'onreply\_route' is to send the reply upstream according to Via header).
+
+Example of usage:
+
+    onreply\_route {
+        if($rs=="183") {
+            drop();
+        }
+    }
+
+#### 15. exit() [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#exit)
+
+Stop the execution of the configuration script -- it has the same behaviour as return(0). It does not affect the implicit action to be taken after script execution.
+
+  route {
+    if (route(2)) {
+      xlog("L\_NOTICE","method $rm is INVITE\\n");
+    } else {
+      xlog("L\_NOTICE","method is $rm\\n");
+    };
+  }
+
+  route\[2\] {
+    if (is\_method("INVITE")) {
+      return(1);
+    } else if (is\_method("REGISTER")) {
+      return(-1);
+    } else if (is\_method("MESSAGE")) {
+      sl\_send\_reply("403","IM not allowed");
+      exit;
+    };
+  }
+
+#### 16. force\_rport() [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#force_rport)
+
+Force\_rport() adds the rport parameter to the first Via header. Thus, **OpenSIPS** will add the received IP port to the top most via header in the SIP message, even if the client does not indicate support for rport. This enables subsequent SIP messages to return to the proper port later on in a SIP transaction.
+
+The rport parameter is defined in RFC 3581.
+
+Example of usage:
+
+    force\_rport();
+
+#### 17. force\_send\_socket(proto:address\[:port\]) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#force_send_socket)
+
+Force **OpenSIPS** to send the message from the specified socket (it \_must\_ be one of the sockets **OpenSIPS** listens on). If the protocol doesn't match (e.g. UDP message "forced" to a TCP socket) the closest socket of the same protocol is used.
+
+Parameters:
+
+*   _socket_ (string)
+
+Example of usage:
+
+    force\_send\_socket("tcp:10.10.10.10:5060");
+
+#### 18. force\_tcp\_alias(\[port\_alias\]) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#force_tcp_alias)
+
+Enables TCP connection reusage (RFC 5923) for the current TLS (or WSS, TCP, WS) connection (source IP + **source port** + transport), regardless if the Via header field contains an _";alias"_ parameter or not. All backwards SIP requests, towards the same (source IP + **Via port** + transport) pair will be forced over this connection, for as long as it stays open. The main purpose of this function (and of RFC 5923) is to minimize the number of TLS connections a SIP proxy must set up, due to the significant CPU overhead of the TLS cipher negotiation phase.
+
+Parameters:
+
+*   _port\_alias_ (int, optional)
+
+**WARNING!** Do not perform **force\_tcp\_alias()** for end-user initiated connections (who are most likely grouped by one or more public IPs), as this would create an open vector for call hijacking!
+
+#### 19. forward(destination) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#forward)
+
+Forward the SIP request to the given destination in stateless mode. This has the format of \[proto:\]host\[:port\]. Host can be an IP or hostname; supported protocols are UDP, TCP and TLS. (For TLS, you need to compile the TLS support into core). If proto or port are not specified, NAPTR and SRV lookups will be used to determine them (if possible).
+
+Parameters:
+
+*   _destination_ (string, optional) - if missing, the forward will be done based on RURI.
+
+Example of usage:
+
+    forward("10.0.0.10:5060");
+    #or
+    forward();
+
+#### 20. get\_timestamp(sec\_avp,usec\_avp) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#get_timestamp)
+
+Returns the current timestamp, seconds and microseconds of the current second, from a single system call.
+
+Parameters:
+
+*   _sec\_avp_ (var)
+*   _usec\_avp_ (var)
+
+Example of usage:
+
+     get\_timestamp($avp(sec),$avp(usec));
+
+#### 21. isdsturiset() [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#isdsturiset)
+
+Test if the dst\_uri field (next hop address) is set.
+
+Example of usage:
+
+    if(isdsturiset()) {
+        log("dst\_uri is set\\n");
+    };
+
+#### 22. isflagset(string) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#isflagset)
+
+Test if a flag is set for currently processed message.
+
+For more see [Flags Documentation](https://www.opensips.org/Documentation/Script-Flags-3-6 "Script Flags - 3.6").
+
+Parameters:
+
+*   _flag_ (string, static)
+
+Example of usage:
+
+    if (isflagset("NAT\_PING"))
+        log("flag NAT\_PING is set\\n");
+
+#### 23. isbflagset(flag, \[branch\_idx\]) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#isbflagset)
+
+Test if a flag is set for a specific branch. "branch\_idx" identifies the branch for which the flags are tested - it must be a positive number. Branch index 0 refers to the RURI branch. If this parameter is missing, 0 branch index is used as default.
+
+For more about script flags, see [Flags Documentation](https://www.opensips.org/Documentation/Script-Flags-3-6 "Script Flags - 3.6").
+
+Parameters:
+
+*   _flag_ (string, static)
+*   _branch\_idx_ (int, optional)
+
+Example of usage:
+
+    if (isbflagset(1, "NAT\_PING"))
+        log("flag NAT\_PING is set in branch 1\\n");
+
+#### 24. is\_myself(host, \[port\]) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#is_myself)
+
+Test if the host and optionally the port represent one of the addresses that OpenSIPS listens on. This checks the list of local IP addresses, hostnames and aliases that have been set in the OpenSIPS configuration file.
+
+Parameters:
+
+*   host (string)
+*   port (int, optional)
+
+Example of usage:
+
+    if (is\_myself($rd, $rp)
+        xlog("the request is for local processing\\n");
+
+#### 25. log(\[level,\] string) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#log)
+
+Write text message to standard error terminal or syslog. You can specify the log level as first parameter.
+
+Example of usage:
+
+    log("just some text message\\n");
+
+#### 26. move\_branch(\[src\_idx\], \[dst\_idx\] \[, keep\]) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#move_branch)
+
+Moves the whole information attached to the **src\_idx** branch to the **dst\_idx** branch. Both **src\_idx** and **dst\_idx** should be an integer value and should represent a valid branch index. If they are not provided, or have a negative value, the main/message branch is considered. By default, the function removes the **src\_idx** branch after moving it, and shifts all the remaining branches after it. If, however, the third parameter of the function is the **keep** string, the branch is not removed, and only copied to the **dst\_idx** branch.
+
+#### 27. next\_branches() [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#next_branches)
+
+Adds to the request a new destination set that includes all highest priority class contacts ('q' value based) from the serialized branches (see serialize\_branches()). If called from a route block, it rewrites the request uri with first contact and adds the remaining contacts as parallel branches. If called from failure route block, adds all contacts as parallel branches. All used contacts are removes the serialized branches.
+
+Returns true if at least one contact was added for the request's destination set - returns 1 if other branches are still pending and return 2 if no other branches are left for future processing - shortly, if 2: this is the last branch, if 1: other will follow. False is return is nothing was done (no more serialized branches).
+
+Example of usage:
+
+    next\_branches();
+
+#### 28. prefix(str) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#prefix)
+
+Add the string parameter in front of username in R-URI.
+
+Parameters:
+
+*   _str_ (string)
+
+Example of usage:
+
+    prefix("00");
+
+#### 29. pv\_printf(pv, fmt\_str) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#pv_printf)
+
+Prints the formatted string 'fmt\_str' in the AVP 'pv'. The 'fmt\_str' parameter can include any pseudo-variable defined in **OpenSIPS**. The 'pv' can be any writable pseudo-variable -- e.g.,: AVPs, VARs, $ru, $rU, $rd, $du, $br, $fs.
+
+Parameters:
+
+*   _pv_ (var)
+*   _string_ (string)
+
+Example of usage:
+
+    pv\_printf($var(x), "r-uri: $ru");
+    pv\_printf($avp(i:3), "from uri: $fu");
+
+#### 30. raise\_event(event, \[attrs\], \[vals\]) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#raise_event)
+
+Raises from script an event through OpenSIPS Event Interface.
+
+This function triggers an event for all subscribers for that event, regardless the transport module used.
+
+Parameters:
+
+*   _event_ (string) - the name of the event which should be raised
+*   _attrs_ (var, optional) - AVP containing the the names of the attributes; if this parameter is missing and _vals_ is provided, the attributes will be written as array(positional) params in the JSON-RPC payload
+*   _vals_ (var, optional) - AVP containing values attached to the event; if this parameter is missing, the raised event will not have any attributes, even if the _attrs_ parameter is provided.
+
+Example of usage (raises an event with no attributes):
+
+raise\_event("E\_NO\_PARAM");
+
+Example of usage (raises an event with two attributes):
+
+$avp(attr-name) = "param1";
+$avp(attr-name) = "param2";
+$avp(attr-val) = 1;
+$avp(attr-val) = "2";
+raise\_event("E\_TWO\_PARAMS", $avp(attr-name), $avp(attr-val));
+
+Example of usage (raises an event with two unnamed attributes):
+
+$avp(attr-val) = 1;
+$avp(attr-val) = "2";
+raise\_event("E\_TWO\_PARAMS", , $avp(attr-val));
+
+#### 31. remove\_branch(branch\_idx) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#remove_branch)
+
+Removes a given branch. Once a branch is removed, all the subsequent branches are shifted (i.e. if branch n is removed, then the old n+1 branch becomes the new n branch, the old n+2 branch becomes n+1 and so on).
+
+Parameters:
+
+*   _branch\_idx_ (int)
+
+Example of usage (remove all branches with URI hostname "127.0.0.1"):
+
+$var(i) = 0;
+while ($(branch(uri)\[$var(i)\]) != null) {
+   xlog("L\_INFO","$$(branch(uri)\[$var(i)\])=\[$(branch(uri)\[$var(i)\])\]\\n");
+   if ($(branch(uri)\[$var(i)\]{uri.host}) == "127.0.0.1") {
+       xlog("L\_INFO","removing branch $var(i) with URI=\[$(branch(uri)\[$var(i)\])\]\\n");
+       remove\_branch($var(i));
+   } else {
+       $var(i) = $var(i) + 1;
+   }
+}
+
+#### 32. return(int) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#return)
+
+The return() function allows you to return any integer value from a called route() block. You can test the value returned by a route using "$retcode" variable.
+
+return(0) is same as "exit()";
+
+In bool expressions:
+
+  \* Negative and ZERO is FALSE
+  \* Positive is TRUE
+
+Example usage:
+
+route {
+  if (route(2)) {
+    xlog("L\_NOTICE","method $rm is INVITE\\n");
+  } else {
+    xlog("L\_NOTICE","method $rm is REGISTER\\n");
+  };
+}
+
+route\[2\] {
+  if (is\_method("INVITE")) {
+    return(1);
+  } else if (is\_method("REGISTER")) {
+    return(-1);
+  } else {
+    return(0);
+  };
+}
+
+#### 33. resetdsturi() [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#resetdsturi)
+
+Set the value of dst\_uri filed to NULL. dst\_uri field is usually set after loose\_route() or lookup("location") if the contact address is behind a NAT.
+
+Example of usage:
+
+    resetdsturi();
+
+#### 34. resetflag(flag) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#resetflag)
+
+Reset a flag for currently processed message (unset its value).
+
+For more see [Flags Documentation](https://www.opensips.org/Documentation/Script-Flags-3-6 "Script Flags - 3.6").
+
+Parameters:
+
+*   _flags_ (string, static)
+
+Example of usage:
+
+    resetflag("NAT\_PING");
+
+#### 35. resetbflag(flag, \[branch\_idx\]) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#resetbflag)
+
+Reset a flag for a specific branch (unset its value). "branch\_idx" identifies the branch for which the flag is reset - it must be a positive number. Branch index 0 refers to the RURI branch. If this parameter is missing, 0 branch index is used as default.
+
+Parameters:
+
+*   _flag_ (string, static)
+*   _branch\_idx_ (int, optional)
+
+For more about script flags, see [Flags Documentation](https://www.opensips.org/Documentation/Script-Flags-3-6 "Script Flags - 3.6").
+
+Example of usage:
+
+    resetbflag(1, "NAT\_PING");
+    # or
+    resetbflag("NAT\_PING"); # same as resetbflag(0, "NAT\_PING")
+
+#### 36. revert\_uri() [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#revert_uri)
+
+Set the R-URI to the value of the R-URI as it was when the request was received by server (undo all changes of R-URI).
+
+Example of usage:
+
+    revert\_uri();
+
+#### 37. set\_via\_handling(flags) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#set_via_handling)
+
+Rewrite the domain part of the R-URI with the value of function's parameter. Other parts of the R-URI like username, port and URI parameters remain unchanged.
+
+Parameters:
+
+*   _flags_ (string) - a comma separated list of named flags
+    *   `force-rport` - adds the rport parameter to the first Via header; thus, **OpenSIPS** will add the received IP port to the top most via header in the SIP message, even if the client does not indicate support for rport. This enables subsequent SIP messages to return to the proper port later on in a SIP transaction.
+    *   `add-local-rport `\- add 'rport' parameter to the Via header generated by server (see RFC3581 for its meaning); it affects only the current processed request.
+    *   `reply-to-via` - routes back the repies to the IP:port from the top VIA instead of the src IP:port of the requests
+    *   `force-tcp-alias` - see [force\_tcp\_alias()](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#force_tcp_alias) function
+
+Example of usage:
+
+    set\_via\_handling("force-rport,reply-to-via");
+
+#### 38. sethost(host) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#sethost)
+
+Rewrite the domain part of the R-URI with the value of function's parameter. Other parts of the R-URI like username, port and URI parameters remain unchanged.
+
+Parameters:
+
+*   _host_ (string)
+
+Example of usage:
+
+    sethost("1.3.6.4");
+
+#### 39. sethostport(hostport) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#sethostport)
+
+Rewrite the domain part and port of the R-URI with the value of function's parameter. Other parts of the R-URI like username and URI parameters remain unchanged.
+
+Parameters:
+
+*   _hostport_ (string)
+
+Example of usage:
+
+    sethostport("1.3.6.4:5080");
+
+#### 40. setuser(user) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#setuser)
+
+Rewrite the user part of the R-URI with the value of function's parameter.
+
+Parameters:
+
+*   _user_ (string)
+
+Example of usage:
+
+    setuser("newuser");
+
+#### 41. setuserpass(pass) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#setuserpass)
+
+Rewrite the password part of the R-URI with the value of function's parameter.
+
+Parameters:
+
+*   _pass_ (string)
+
+Example of usage:
+
+    setuserpass("my\_secret\_passwd");
+
+#### 42. setport(port) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#setport)
+
+Rewrites/sets the port part of the R-URI with the value of function's parameter.
+
+Parameters:
+
+*   _port_ (string)
+
+Example of usage:
+
+    setport("5070");
+
+#### 43. seturi(str) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#seturi)
+
+Rewrite the request URI.
+
+Parameters:
+
+*   _uri_ (string)
+
+Example of usage:
+
+    seturi("sip:test@opensips.org");
+
+[\# route](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#route)
+
+#### 44.  route(name \[, param1 \[, param2 \[, ...\] \] \] ) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#route)
+
+This function is used to run the code from the 'name' route, declared in the script. Optionally, it can receive several parameters (up to 7), that can be later retrieved using the '$param(idx)' pseudo-variable.
+
+The name of the route is an identifier format, whereas the parameters can be either int, string, or a pseudo-variable.
+
+Example of usage:
+
+   route(HANDLE\_SEQUENTIALS);
+   route(HANDLE\_SEQUENTIALS, 1, "param", $var(param));
+
+#### 45.  script\_trace(\[log\_level, pv\_format\_string, \[info\]\]) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#script_trace)
+
+This function start the script tracing - this helps to better understand the flow of execution in the OpenSIPS script, like what function is executed, what line it is, etc. Moreover, you can also trace the values of pseudo-variables, as script execution progresses.
+
+The blocks of the script where script tracing is enabled will print a line for each individual action that is done (e.g. assignments, conditional tests, module functions, core functions, etc.). Multiple pseudo-variables can be monitored by specifying a **pv\_format\_string** (e.g. "$ru---$avp(var1)").
+
+The logs produced by multiple/different traced regions of your script can be differentiated (tagged) by specifying an additional plain string - **info\_string** - as the 3rd parameter.
+
+To disable script tracing, just do script\_trace(). Otherwise, the tracing will automatically stop at the end the end of the top route.
+
+Parameters:
+
+*   _log\_level_ (int, optional)
+*   _pv\_format\_string_ (string, optional)
+*   _info_ (string, static, optional)
+
+Example of usage:
+
+    script\_trace( 1, "$rm from $si, ruri=$ru", "me");
+
+will produce:
+
+    \[line 578\]\[me\]\[module consume\_credentials\] -\> (INVITE from 127.0.0.1 , ruri=sip:111211@opensips.org)
+    \[line 581\]\[me\]\[core setbflag\] -\> (INVITE from 127.0.0.1 , ruri=sip:111211@opensips.org)
+    \[line 583\]\[me\]\[assign equal\] -\> (INVITE from 127.0.0.1 , ruri=sip:111211@opensips.org)
+    \[line 592\]\[me\]\[core if\] -\> (INVITE from 127.0.0.1 , ruri=sip:tester@opensips.org)
+    \[line 585\]\[me\]\[module is\_avp\_set\] -\> (INVITE from 127.0.0.1 , ruri=sip:tester@opensips.org)
+    \[line 589\]\[me\]\[core if\] -\> (INVITE from 127.0.0.1 , ruri=sip:tester@opensips.org)
+    \[line 586\]\[me\]\[module is\_method\] -\> (INVITE from 127.0.0.1 , ruri=sip:tester@opensips.org)
+    \[line 587\]\[me\]\[module trace\_dialog\] -\> (INVITE 127.0.0.1 , ruri=sip:tester@opensips.org)
+    \[line 590\]\[me\]\[core setflag\] -\> (INVITE from 127.0.0.1 , ruri=sip:tester@opensips.org) 
+
+#### 46. send(destination \[, headers\]) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#send)
+
+Send the original SIP message to a specific destination in stateless mode. This is definied as \[proto:\]host\[:port\]. No changes are applied to received message, no Via header is added, unless headers parameter is specified. Host can be an IP or hostname; supported protocols are UDP, TCP and TLS. (For TLS, you need to compile the TLS support into core). If proto or port are not specified, NAPTR and SRV lookups will be used to determine them (if possible). The headers parameter should end in '\\r\\n'.
+
+Parameters:
+
+*   _destination_ (string)
+*   _headers_ (string, optional)
+
+Example of usage:
+
+   send("udp:10.10.10.10:5070");
+   send("udp:10.10.10.10:5070", "Server: opensips\\r\\n");
+
+#### 47. serialize\_branches(clear\_previous\[, keep\_order\]) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#serialize_branches)
+
+Takes all currently added branches for parallel forking (e.g. with lookup() or append\_branch()), as well as the current branch (R-URI ($ru) / outbound Proxy ($du) / q value ($ru\_q) / branch flags / forced Path headers / forced send socket), and prepares them for serial forking instead. The ordering is done in decreasing "q" order. The serialized branches are internally stored in the "$avp(serial\_branch)" AVP - this allows them to be manipulated by the "next\_branches()" function, usually within a failure route.
+
+NOTE that (according to RFC3261), the branches with the same "q" value will still be parallel forked during a certain step in the serial forking (it will result a combination of serial with parallel forking). In other words, this function will clear all added branches and keep re-adding them as long as they have identical highest "q" values, while throwing all other "lower-than-highest q" branches in the "$avp(serial\_branch)". A similar grouping process takes place during each "next\_branches()" function call.
+
+NOTE that this function is not altering the current branch (R-URI, outbound proxy, etc.) - it is just preparing a serial forking set with the above-mentioned branches. You may need to call "next\_branches()" immediately after calling this function, see the example below.
+
+Parameters:
+
+*   _clear\_previous_ (int) - if set to non-zero, all previous results of another "serialize\_branches()" (serial forking set which is no longer needed) will be deleted before starting a new set
+*   _keep\_order_ (int, optional) - if set to non-zero, the added branches as well as the current branch, will be serialized exactly in the order in which they are found.
+
+Example of usage:
+
+    if (!lookup("location")) {
+        t\_reply("480", "Temporarily Unavailable");
+        exit;
+    }
+
+    serialize\_branches(1);
+    next\_branches(); # Pop the R-URI from the serialized branches set
+
+#### 48. set\_advertised\_address(adv\_addr) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#set_advertised_address)
+
+Same as 'advertised\_address' but it affects only the current message. It has priority if 'advertised\_address' is also set.
+
+Parameters:
+
+*   _adv\_addr_ (string)
+
+Example of usage:
+
+    set\_advertised\_address("opensips.org");
+
+#### 49. set\_advertised\_port(adv\_port) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#set_advertised_port)
+
+Same as 'advertised\_port' but it affects only the current message. It has priority over 'advertised\_port'.
+
+Parameters:
+
+*   _adv\_port_ (string)
+
+Example of usage:
+
+    set\_advertised\_port("5080");
+
+#### 50. setdsturi(uri) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#setdsturi)
+
+Explicitely set the dst\_uri field to the value of the paramater. The parameter has to be a valid SIP URI.
+
+Parameters:
+
+*   _uri_ (string)
+
+Example of usage:
+
+    setdsturi("sip:10.10.10.10:5090");
+
+#### 51. setflag(flag) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#setflag)
+
+Set a flag for currently processed message. The flags are used to mark the message for special processing (e.g. pinging NAT'ed contacts, TCP connect behavior, etc.) or to keep some state (e.g. message authenticated). The OpenSIPS script supports, at most, 32 unique string flags.
+
+Parameters:
+
+*   _flag_ (string, static)
+
+Example of usage:
+
+    setflag("NAT\_PING");
+
+#### 52. setbflag(flag, \[branch\_idx\]) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#setbflag)
+
+Set a flag for a specific branch. "branch\_idx" identifies the branch for which the flag is set - it must be a positive number. Branch index 0 refers to the RURI branch. If this parameter is missing, 0 branch index is used as default. The OpenSIPS script supports, at most, 32 unique string branch flags.
+
+For more about script flags, see [Flags Documentation](https://www.opensips.org/Documentation/Script-Flags-3-6 "Script Flags - 3.6").
+
+Parameters:
+
+*   _flag_ (string, static)
+*   _branch\_idx_ (int, optional)
+
+Example of usage:
+
+    setbflag(1, "NAT\_PING");
+    # or
+    setbflag("NAT\_PING"); # same as setbflag(0, "NAT\_PING")
+
+#### 53. sr\_check\_status( group, \[identifier\]) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#sr_check_status)
+
+Function to check the status of an 'status/report' identifier. Such checking is very useful for determining at script level the readiness of a module or core component (if able to provide its full functionality).
+
+Parameters:
+
+*   _group_ (string), the name of the 'status/report' group (the group exported by the OpenSIPS core is named "core", while the modules may export groups with their names.
+*   _identifier_ (string, optional), the name of the identifier to be checked (what are the available identifiers, it depends on the party exporting the group). Possible values for this identifier are:
+    *   (1) name of an identifier
+    *   (2) NULL, to refer to the default (per group) identifier (converted internally into "main" identifier
+    *   (3) "all" to refer to all the identifiers in the group
+
+The returned value, depending on the provided identifier value, may be:
+
+*   (1) the status of the given identifier
+*   (2) the status of the "main" identifier
+*   (3) the aggregated status over all identifiers, as -1 (if at least of identifier has a negative status) or 1 (if all identifiers have a positive status)
+
+Example of usage:
+
+    # check if the "pstn" identifier (the "pstn" partition) from "drouting" module is ready (data is fully loaded)
+    if (st\_check\_status( "drouting", "pstn") ) {}
+
+    # check if the all identifiers (all partitions) from "drouting" module are ready (data is fully loaded)
+    if (st\_check\_status( "drouting", "all") ) {}
+
+#### 54. strip(n) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#strip)
+
+Strip the first N-th characters from username of R-URI (N is the value of the parameter).
+
+Parameters:
+
+*   _n_ (int)
+
+Example of usage:
+
+    strip(3);
+
+#### 55. strip\_tail(n) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#strip_tail)
+
+Strip the last N-th characters from username of R-URI (N is the value of the parameter).
+
+Parameters:
+
+*   _n_ (int)
+
+Example of usage:
+
+  strip\_tail(3);
+
+#### 56. subscribe\_event(string, string \[, int\]) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#subscribe_event)
+
+Subscribes an external application for a certain event for the OpenSIPS Event Interface. This is used for transport protocols that cannot subscribe by themselves (example event\_rabbitmq). This function should be called only once in the startup\_route if the subscription doesn't expire, or in a timer route if the subscription should be renewed once in a while.
+
+Parameters:
+
+*   _event_ (string) - the name of the event an external application should be notified for.
+*   _socket_ (string) - the socket of the external application. Note that this socket should follow the syntax of an existing loaded Event Interface transport module (example: event\_datagram, event\_rabbitmq).
+*   _expire_ (int, optional) - the expire time of the subscription. If it is not present, then the subscription does not expire at all.
+
+Example of usage (subscriber that never expires, notified by the RabbitMQ module):
+
+startup\_route {
+    subscribe\_event("E\_PIKE\_BLOCKED", "rabbitmq:127.0.0.1/pike");
+}
+
+Example of usage (subscriber expires every 5 seconds, notified through UDP):
+
+timer\_route\[event\_subscribe, 4\] {
+    subscribe\_event("E\_PIKE\_BLOCKED", "udp:127.0.0.1:5051", 5);
+}
+
+#### 57. swap\_branches(\[br1\_idx\], \[br2\_idx\]) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#swap_branches)
+
+Swaps the information between two branches, represented by the **br1\_idx** and **br2\_idx**. Both values should be an integer value and should represent a valid branch index. If they are not provided, or have a negative value, the main/message branch is considered.
+
+#### 58. use\_blacklist(bl\_name) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#use_blacklist)
+
+Enables the DNS blacklist name received as parameter. Its primary purposes will be to prevent sending requests to critical IPs (like GWs) due DNS or to avoid sending to destinations that are known to be unavailable (temporary or permanent).
+
+Parameters:
+
+*   _bl\_name_ (string)
+
+    use\_blacklist("pstn-gws");
+
+#### 59. unuse\_blacklist(bl\_name) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#unuse_blacklist)
+
+Disables the DNS blacklist name received as parameter.
+
+Parameters:
+
+*   _bl\_name_ (string)
+
+    unuse\_blacklist("pstn-gws");
+
+#### 60. check\_blacklist\_rule(\[bl\_name\], ip\[, port \[, proto\]\]) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#check_blacklist_rule)
+
+Checks whether a specific proto:ip:port+pattern matches a blacklist, or all if _bl\_name_ is not specified.
+
+Parameters:
+
+*   _bl\_name_ (string, optional) - if missing, the rule is matched against all used blacklists
+*   _ip_ (string) - the IP to check against
+*   _port_ (integer, optional) - the port to check against; if missing, 0 is considered, which will match only 0-port rules
+*   _proto_ (string, optional) - the protocol to check against, or "any" if any protocol should be checked; if missing, "any" is considered, which will match only any proto rules
+*   _pattern_ (string, optional) - the pattern to check against
+
+    if (check\_blacklist("pstn-gws", $dd, $dp, $dP))
+        xlog("REQUEST will be blocked\\n");
+
+#### 61. add\_blacklist\_rule(\[bl\_name\], ip\[, port \[, proto \[, expire\]\]\]) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#add_blacklist_rule)
+
+Adds a proto:ip:port+pattern rule to a blacklist.
+
+Parameters:
+
+*   _bl\_name_ (string) - the blacklist to add the rule to
+*   _ip_ (string) - the IP to add; if the IP starts with '!', the entire rule is negated
+*   _port_ (integer, optional) - the port to add; if missing, 0/any port is used
+*   _proto_ (string, optional) - the protocol to add, or "any" for any protocol; if missing, "any" is used
+*   _pattern_ (string, optional) - the pattern to add
+*   _expire_ (integer, optional) - if specified, provides the expiration time in seconds for the rule
+
+    add\_blacklist\_rule("filter", $si, $sp, "udp");
+
+#### 62. del\_blacklist\_rule(\[bl\_name\], ip\[, port \[, proto\]\]) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#del_blacklist_rule)
+
+Removes a proto:ip:port+pattern rule from a blacklist.
+
+Parameters:
+
+*   _bl\_name_ (string) - the blacklist to remove the rule from
+*   _ip_ (string) - the IP to remove; if the IP starts with '!', the entire rule is negated
+*   _port_ (integer, optional) - the port to remove; if missing, 0/any port is used
+*   _proto_ (string, optional) - the protocol to remove, or "any" for any protocol; if missing, "any" is used
+*   _pattern_ (string, optional) - the pattern to remove
+
+    del\_blacklist\_rule("filter", $si, $sp, "udp");
+
+#### 63. xlog(\[log\_level, \]format\_string) [🔗](https://www.opensips.org/Documentation/Script-CoreFunctions-3-6#xlog)
+
+Allows various debugging / runtime / critical messages to be printed as the execution of the OpenSIPS script is done. All pseudo-variables included in the _format\_string_ parameter will be expanded. There are several optional logging levels which can be specified. They work in accordance with the severity levels of syslog. The levels are named as follows:
+
+*   L\_ALERT (-3)
+*   L\_CRIT (-2)
+*   L\_ERR (-1) - this is used by default if log\_level is omitted
+*   L\_WARN (1)
+*   L\_NOTICE (2)
+*   L\_INFO (3)
+*   L\_DBG (4)
+
+    # a few xlog scripting examples
+    xlog("Received $rm from $fu (callid: $ci)\\n");
+    xlog("L\_ERR", "key $var(username) not found in cache!\\n");
+
+
+
+
+ |
