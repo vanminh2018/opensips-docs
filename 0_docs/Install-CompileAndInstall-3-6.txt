@@ -1,14 +1,3 @@
-Title: openSIPS | Documentation / Compile and Install
-
-URL Source: https://www.opensips.org/Documentation/Install-CompileAndInstall-3-6
-
-Markdown Content:
-#### Documentation -\> [Manuals](https://www.opensips.org/Documentation/Manuals "Manuals") -\> [Manual devel](https://www.opensips.org/Documentation/Manual-3-6 "OpenSIPS Manual - 3.6") -\> Compile And Install
-
-* * *
-
-Pages for other versions: devel [3.5](https://www.opensips.org/Documentation/Install-CompileAndInstall-3-5 "Compile and Install - 3.5") [3.4](https://www.opensips.org/Documentation/Install-CompileAndInstall-3-4 "Compile and Install - 3.4") Older versions: [3.3](https://www.opensips.org/Documentation/Install-CompileAndInstall-3-3 "Compile and Install - 3.3") [3.2](https://www.opensips.org/Documentation/Install-CompileAndInstall-3-2 "Compile and Install - 3.2") [3.1](https://www.opensips.org/Documentation/Install-CompileAndInstall-3-1 "Compile and Install - 3.1") [3.0](https://www.opensips.org/Documentation/Install-CompileAndInstall-3-0 "Compile and Install - 3.0") [2.4](https://www.opensips.org/Documentation/Install-CompileAndInstall-2-4 "Compile and Install - 2.4") [2.3](https://www.opensips.org/Documentation/Install-CompileAndInstall-2-3 "Compile and Install - 2.3") [2.2](https://www.opensips.org/Documentation/Install-CompileAndInstall-2-2 "Compile and Install - 2.2") [2.1](https://www.opensips.org/Documentation/Install-CompileAndInstall-2-1 "Compile and Install - 2.1") [1.11](https://www.opensips.org/Documentation/Install-CompileAndInstall-1-11 "Compile and Install - 1.11") [1.10](https://www.opensips.org/Documentation/Install-CompileAndInstall-1-10 "Compile and Install - ver 1.10") [1.9](https://www.opensips.org/Documentation/Install-CompileAndInstall-1-9 "Compile and Install - ver 1.9") [1.8](https://www.opensips.org/Documentation/Install-CompileAndInstall-1-8 "Compile and Install - ver 1.8") [1.7](https://www.opensips.org/Documentation/Install-CompileAndInstall-1-7 "Compile and Install - ver 1.7") [1.6](https://www.opensips.org/Documentation/Install-CompileAndInstall-1-6 "Compile and Install - ver 1.6") [1.5](https://www.opensips.org/Documentation/Install-CompileAndInstall-1-5 "Compile and Install - ver 1.5") [1.4](https://www.opensips.org/Documentation/Install-CompileAndInstall-1-4 "Compile and Install - ver 1.4")
-
 **Compile and Install v3.6**
 
 * * *

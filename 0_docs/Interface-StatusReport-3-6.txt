@@ -1,14 +1,3 @@
-Title: openSIPS | Documentation / Management Interface
-
-URL Source: https://www.opensips.org/Documentation/Interface-StatusReport-3-6
-
-Markdown Content:
-##### Documentation -\> [Manuals](https://www.opensips.org/Documentation/Manuals "Manuals") -\> [Manual devel](https://www.opensips.org/Documentation/Manual-3-6 "OpenSIPS Manual - 3.6") -\> Status/Report Interface
-
-* * *
-
-Pages for other versions: devel [3.5](https://www.opensips.org/Documentation/Interface-MI-3-5 "Management Interface - 3.5") [3.4](https://www.opensips.org/Documentation/Interface-MI-3-4 "Management Interface - 3.4") Older versions: [3.3](https://www.opensips.org/Documentation/Interface-MI-3-3 "Management Interface - 3.3") [3.2](https://www.opensips.org/Documentation/Interface-MI-3-2 "Management Interface - 3.2") [3.1](https://www.opensips.org/Documentation/Interface-MI-3-1 "Management Interface - 3.1") [3.0](https://www.opensips.org/Documentation/Interface-MI-3-0 "Management Interface - 3.0") [2.4](https://www.opensips.org/Documentation/Interface-MI-2-4 "Management Interface - devel") [2.3](https://www.opensips.org/Documentation/Interface-MI-2-3 "Management Interface - devel") [2.2](https://www.opensips.org/Documentation/Interface-MI-2-2 "Management Interface - 2.2") [2.1](https://www.opensips.org/Documentation/Interface-MI-2-1 "Management Interface - devel") [1.11](https://www.opensips.org/Documentation/Interface-MI-1-11 "Management Interface - 1.11") [1.10](https://www.opensips.org/Documentation/Interface-MI-1-10 "Management Interface - ver 1.10") [1.9](https://www.opensips.org/Documentation/Interface-MI-1-9 "Management Interface - ver 1.9") [1.8](https://www.opensips.org/Documentation/Interface-MI-1-8 "Management Interface - ver 1.8") [1.7](https://www.opensips.org/Documentation/Interface-MI-1-7 "Management Interface - ver 1.7") [1.6](https://www.opensips.org/Documentation/Interface-MI-1-6 "Management Interface - ver 1.6") [1.5](https://www.opensips.org/Documentation/Interface-MI-1-5 "Management Interface - ver 1.5") [1.4](https://www.opensips.org/Documentation/Interface-MI-1-4 "Management Interface - ver 1.4")
-
 **Status/Report Interface v3.6**
 
 * * *

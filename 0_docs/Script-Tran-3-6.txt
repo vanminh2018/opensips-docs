@@ -1,14 +1,3 @@
-Title: openSIPS | Documentation / Script Transformations
-
-URL Source: https://www.opensips.org/Documentation/Script-Tran-3-6
-
-Markdown Content:
-##### Documentation -\> [Manuals](https://www.opensips.org/Documentation/Manuals "Manuals") -\> [Manual devel](https://www.opensips.org/Documentation/Manual-3-6 "OpenSIPS Manual - 3.6") -\> Script Transformations
-
-* * *
-
-Pages for other versions: devel [3.5](https://www.opensips.org/Documentation/Script-Tran-3-5 "Script Transformations - 3.5") [3.4](https://www.opensips.org/Documentation/Script-Tran-3-4 "Script Transformations - 3.4") Older versions: [3.3](https://www.opensips.org/Documentation/Script-Tran-3-3 "Script Transformations - 3.3") [3.2](https://www.opensips.org/Documentation/Script-Tran-3-2 "Script Transformations - 3.2") [3.1](https://www.opensips.org/Documentation/Script-Tran-3-1 "Script Transformations - 3.1") [3.0](https://www.opensips.org/Documentation/Script-Tran-3-0 "Script Transformations - 3.0") [2.4](https://www.opensips.org/Documentation/Script-Tran-2-4 "Script Transformations - 2.4") [2.3](https://www.opensips.org/Documentation/Script-Tran-2-3 "Script Transformations - 2.3") [2.2](https://www.opensips.org/Documentation/Script-Tran-2-2 "Script Transformations - 2.2") [2.1](https://www.opensips.org/Documentation/Script-Tran-2-1 "Script Transformations - 2.1") [1.11](https://www.opensips.org/Documentation/Script-Tran-1-11 "Script Transformations - ver 1.11") [1.10](https://www.opensips.org/Documentation/Script-Tran-1-10 "Script Transformations - ver 1.10") [1.9](https://www.opensips.org/Documentation/Script-Tran-1-9 "Script Transformations - ver 1.9") [1.8](https://www.opensips.org/Documentation/Script-Tran-1-8 "Script Transformations - ver 1.8") [1.7](https://www.opensips.org/Documentation/Script-Tran-1-7 "Script Transformations - ver 1.7") [1.6](https://www.opensips.org/Documentation/Script-Tran-1-6 "Script Transformations - ver 1.6") [1.5](https://www.opensips.org/Documentation/Script-Tran-1-5 "Script Transformations - ver 1.5") [1.4](https://www.opensips.org/Documentation/Script-Tran-1-4 "Script Transformations - ver 1.4")
-
 **Script Transformations v3.6**
 
 * * *

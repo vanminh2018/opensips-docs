@@ -1,14 +1,3 @@
-Title: openSIPS | Documentation / Core Variables
-
-URL Source: https://www.opensips.org/Documentation/Script-CoreVar-3-6
-
-Markdown Content:
-##### Documentation -\> [Manuals](https://www.opensips.org/Documentation/Manuals "Manuals") -\> [Manual devel](https://www.opensips.org/Documentation/Manual-3-6 "OpenSIPS Manual - 3.6") -\> Core Variables
-
-* * *
-
-Pages for other versions: devel [3.5](https://www.opensips.org/Documentation/Script-CoreVar-3-5 "Core Variables - 3.5") [3.4](https://www.opensips.org/Documentation/Script-CoreVar-3-4 "Core Variables - 3.4") Older versions: [3.3](https://www.opensips.org/Documentation/Script-CoreVar-3-3 "Core Variables - 3.3") [3.2](https://www.opensips.org/Documentation/Script-CoreVar-3-2 "Core Variables - 3.2") [3.1](https://www.opensips.org/Documentation/Script-CoreVar-3-1 "Core Variables - 3.1") [3.0](https://www.opensips.org/Documentation/Script-CoreVar-3-0 "Core Variables - 3.0") [2.4](https://www.opensips.org/Documentation/Script-CoreVar-2-4 "Core Variables - 2.4") [2.3](https://www.opensips.org/Documentation/Script-CoreVar-2-3 "Core Variables - 2.3") [2.2](https://www.opensips.org/Documentation/Script-CoreVar-2-2 "Core Variables - 2.2") [2.1](https://www.opensips.org/Documentation/Script-CoreVar-2-1 "Core Variables - 2.1") [1.11](https://www.opensips.org/Documentation/Script-CoreVar-1-11 "Core Variables - 1.11") [1.10](https://www.opensips.org/Documentation/Script-CoreVar-1-10 "Core Variables - ver 1.10") [1.9](https://www.opensips.org/Documentation/Script-CoreVar-1-9 "Core Variables - ver 1.9") [1.8](https://www.opensips.org/Documentation/Script-CoreVar-1-8 "Core Variables - ver 1.8") [1.7](https://www.opensips.org/Documentation/Script-CoreVar-1-7 "Core Variables - ver 1.7") [1.6](https://www.opensips.org/Documentation/Script-CoreVar-1-6 "Core Variables - ver 1.6") [1.5](https://www.opensips.org/Documentation/Script-CoreVar-1-5 "Core Variables - ver 1.5") [1.4](https://www.opensips.org/Documentation/Script-CoreVar-1-4 "Core Variables - ver 1.4")
-
 **Core Variables v3.6**
 
 * * *

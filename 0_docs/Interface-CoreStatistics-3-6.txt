@@ -1,14 +1,3 @@
-Title: openSIPS | Documentation / Core Statistics
-
-URL Source: https://www.opensips.org/Documentation/Interface-CoreStatistics-3-6
-
-Markdown Content:
-##### Documentation -\> [Manuals](https://www.opensips.org/Documentation/Manuals "Manuals") -\> [Manual devel](https://www.opensips.org/Documentation/Manual-3-6 "OpenSIPS Manual - 3.6") -\> Core Statistics
-
-* * *
-
-Pages for other versions: devel [3.5](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-5 "Core Statistics - 3.5") [3.4](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-4 "Core Statistics - 3.4") Older versions: [3.3](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-3 "Core Statistics - 3.3") [3.2](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-2 "Core Statistics - 3.2") [3.1](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-1 "Core Statistics - 3.1") [3.0](https://www.opensips.org/Documentation/Interface-CoreStatistics-3-0 "Core Statistics - 3.0") [2.4](https://www.opensips.org/Documentation/Interface-CoreStatistics-2-4 "Core Statistics - 2.4") [2.3](https://www.opensips.org/Documentation/Interface-CoreStatistics-2-3 "Core Statistics - devel") [2.2](https://www.opensips.org/Documentation/Interface-CoreStatistics-2-2 "Core Statistics - 2.2") [2.1](https://www.opensips.org/Documentation/Interface-CoreStatistics-2-1 "Core Statistics - devel") [1.11](https://www.opensips.org/Documentation/Interface-CoreStatistics-1-11 "Core Statistics - 1.11") [1.10](https://www.opensips.org/Documentation/Interface-CoreStatistics-1-10 "Core Statistics - ver 1.10") [1.9](https://www.opensips.org/Documentation/Interface-CoreStatistics-1-9 "Core Statistics - ver 1.9") [1.8](https://www.opensips.org/Documentation/Interface-CoreStatistics-1-8 "Core Statistics - ver 1.8") [1.7](https://www.opensips.org/Documentation/Interface-CoreStatistics-1-7 "Core Statistics - ver 1.7") [1.6](https://www.opensips.org/Documentation/Interface-CoreStatistics-1-6 "Core Statistics - ver 1.6") [1.5](https://www.opensips.org/Documentation/Interface-CoreStatistics-1-5 "Core Statistics - ver 1.5") [1.4](https://www.opensips.org/Documentation/Interface-CoreStatistics-1-4 "Core Statistics - ver 1.4")
-
 **Core Statistics v3.6**
 
 * * *

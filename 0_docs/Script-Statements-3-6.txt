@@ -1,14 +1,3 @@
-Title: openSIPS | Documentation / Script Statements
-
-URL Source: https://www.opensips.org/Documentation/Script-Statements-3-6
-
-Markdown Content:
-##### Documentation -\> [Manuals](https://www.opensips.org/Documentation/Manuals "Manuals") -\> [Manual devel](https://www.opensips.org/Documentation/Manual-3-6 "OpenSIPS Manual - 3.6") -\> Script Statements
-
-* * *
-
-Pages for other versions: devel [3.5](https://www.opensips.org/Documentation/Script-Statements-3-5 "Script Statements - 3.5") [3.4](https://www.opensips.org/Documentation/Script-Statements-3-4 "Script Statements - 3.4") Older versions: [3.3](https://www.opensips.org/Documentation/Script-Statements-3-3 "Script Statements - 3.3") [3.2](https://www.opensips.org/Documentation/Script-Statements-3-2 "Script Statements - 3.2") [3.1](https://www.opensips.org/Documentation/Script-Statements-3-1 "Script Statements - 3.1") [3.0](https://www.opensips.org/Documentation/Script-Statements-3-0 "Script Statements - 3.0") [2.4](https://www.opensips.org/Documentation/Script-Statements-2-4 "Script Statements - 2.4") [2.3](https://www.opensips.org/Documentation/Script-Statements-2-3 "Script Statements - 2.3") [2.2](https://www.opensips.org/Documentation/Script-Statements-2-2 "Script Statements - 2.2") [2.1](https://www.opensips.org/Documentation/Script-Statements-2-1 "Script Statements - devel") [1.11](https://www.opensips.org/Documentation/Script-Statements-1-11 "Script Statements - 1.11") [1.10](https://www.opensips.org/Documentation/Script-Statements-1-10 "Script Statements - ver 1.10") [1.9](https://www.opensips.org/Documentation/Script-Statements-1-9 "Script Statements - ver 1.9") [1.8](https://www.opensips.org/Documentation/Script-Statements-1-8 "Script Statements - ver 1.8") [1.7](https://www.opensips.org/Documentation/Script-Statements-1-7 "Script Statements - ver 1.7") [1.6](https://www.opensips.org/Documentation/Script-Statements-1-6 "Script Statements - ver 1.6") [1.5](https://www.opensips.org/Documentation/Script-Statements-1-5 "Script Statements - ver 1.5") [1.4](https://www.opensips.org/Documentation/Script-Statements-1-4 "Script Statements - ver 1.4")
-
 **Script Statements v3.6**
 
 * * *
@@ -84,7 +73,7 @@ Example of usage:
         default:
             log("process other requests here\\n");
        }
-
+    
         # switch of R-URI username
         switch ($rU) {
         case "101":
@@ -100,20 +89,20 @@ Example of usage:
             log("unknown destination number\\n");
        }
     }
-
+    
     route \[my\_logic\] {
         if (is\_method("INVITE"))
             return(-1);
-
+    
         if (is\_method("REGISTER"))
             return(1);
-
+    
         if (is\_method("SUBSCRIBE"))
             return(2);
-
+    
         if (is\_method("NOTIFY"))
             return(3);
-
+    
         return(-2);
     }
 
@@ -149,23 +138,23 @@ Example of usage:
     $avp(arr) = 2;
     $avp(arr) = 3;
     $avp(arr) = 4;
-
+    
     for ($var(it) in $(avp(arr)\[\*\]))
         xlog("array value: $var(it)\\n");
-
+    
     # iterate through all Contact URIs from each Contact header
     for ($var(ct) in $(ct\[\*\]))
         xlog("Contact: $var(ct)\\n");
-
+    
     # iterate through all Via headers of a SIP request
     for ($var(via) in $(hdr(Via)\[\*\]))
         xlog("Found \\"Via\\" header: $var(via)\\n");
-
+    
     # iterate through all JSON documents returned by a MongoDB query
     cache\_raw\_query("mongodb:location", "{... find ...}", "$avp(res)");
     for ($json(contact) in $(avp(res)\[\*\])) {
         xlog("Found: $json(contact/phone) $json(contact/email)\\n");
-
+    
         if ($json(contact/phone) =~ "^40") {
             xlog("found a cheap destination to dial\\n");
             break;

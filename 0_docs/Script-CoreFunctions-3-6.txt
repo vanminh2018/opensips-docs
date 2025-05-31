@@ -1,27 +1,3 @@
-Title: openSIPS | Documentation / Core Functions
-
-URL Source: https://www.opensips.org/Documentation/Script-CoreFunctions-3-6
-
-Markdown Content:
-| Documentation
-
-*   [Manuals](https://www.opensips.org/Documentation/Manuals "Manuals")
-*   [Advanced Tutorials](https://www.opensips.org/Documentation/Tutorials "Tutorials")
-*   [Tips & FAQ](https://www.opensips.org/Documentation/TipsFAQ "TipsFAQ")
-*   [Version Migration](https://www.opensips.org/Documentation/Migration "Migration")
-*   [OpenSIPS Webinars](https://www.opensips.org/Documentation/Webinars "Webinars")
-*   [Troubleshooting](https://www.opensips.org/Documentation/Troubleshooting "Troubleshooting")
-*   [OpenSIPS Tools](https://www.opensips.org/Documentation/Tools "Tools")
-*   [Devel Tutorial](https://www.opensips.org/Documentation/Development-Tutorials "Development-Tutorials")
-
- | 
-
-##### Documentation -\> [Manuals](https://www.opensips.org/Documentation/Manuals "Manuals") -\> [Manual devel](https://www.opensips.org/Documentation/Manual-3-6 "OpenSIPS Manual - 3.6") -\> Core functions
-
-* * *
-
-Pages for other versions: devel [3.5](https://www.opensips.org/Documentation/Script-CoreFunctions-3-5 "Core Functions - 3.5") [3.4](https://www.opensips.org/Documentation/Script-CoreFunctions-3-4 "Core Functions - 3.4") Older versions: [3.3](https://www.opensips.org/Documentation/Script-CoreFunctions-3-3 "Core Functions - 3.3") [3.2](https://www.opensips.org/Documentation/Script-CoreFunctions-3-2 "Core Functions - 3.2") [3.1](https://www.opensips.org/Documentation/Script-CoreFunctions-3-1 "Core Functions - 3.1") [3.0](https://www.opensips.org/Documentation/Script-CoreFunctions-3-0 "Core Functions - 3.0") [2.4](https://www.opensips.org/Documentation/Script-CoreFunctions-2-4 "Core Functions - 2.4") [2.3](https://www.opensips.org/Documentation/Script-CoreFunctions-2-3 "Core Functions - 2.3") [2.2](https://www.opensips.org/Documentation/Script-CoreFunctions-2-2 "Core Functions - 2.2") [2.1](https://www.opensips.org/Documentation/Script-CoreFunctions-2-1 "Core Functions - 2.1") [1.11](https://www.opensips.org/Documentation/Script-CoreFunctions-1-11 "Core Functions - 1.11") [1.10](https://www.opensips.org/Documentation/Script-CoreFunctions-1-10 "Core Functions - ver 1.10") [1.9](https://www.opensips.org/Documentation/Script-CoreFunctions-1-9 "Core Functions - ver 1.9") [1.8](https://www.opensips.org/Documentation/Script-CoreFunctions-1-8 "Core Functions - ver 1.8") [1.7](https://www.opensips.org/Documentation/Script-CoreFunctions-1-7 "Core Functions - ver 1.7") [1.6](https://www.opensips.org/Documentation/Script-CoreFunctions-1-6 "Core Functions - ver 1.6") [1.5](https://www.opensips.org/Documentation/Script-CoreFunctions-1-5 "Core Functions - ver 1.5") [1.4](https://www.opensips.org/Documentation/Script-CoreFunctions-1-4 "Core Functions - ver 1.4")
-
 **Core functions v3.6**
 
 * * *
@@ -138,29 +114,29 @@ Example of usage:
         # thus, URI manipulation does not touch the 
         # appended branch (branches\[1\])
         seturi("sip:C@domain");
-
+    
         # now: branch 0 = C@domain
         #      branch 1 = B@xx.xx.xx.xx
-
+    
         # and if you need a third destination ...
-
+    
         # copy the current branch (branches\[0\]) into
         # a new branch (branches\[2\])
         append\_branch();
-
+    
         # all URI manipulation functions work on branches\[0\]
         # thus, URI manipulation does not touch the 
         # appended branch (branches\[1-2\])
         seturi("sip:D@domain");
-
+    
         # now: branch 0 = D@domain
         #      branch 1 = B@xx.xx.xx.xx
         #      branch 2 = C@domain
-
+    
         t\_relay();
         exit;
     };
-
+    
     # You could also use append\_branch("sip:C@domain") which adds a branch with the new URI:
 
 
@@ -169,7 +145,7 @@ Example of usage:
         append\_branch("sip:user@domain");
         # now: branch 0 = B@xx.xx.xx.xx
         # now: branch 1 = C@domain
-
+    
         t\_relay();
         exit;
 }
@@ -840,7 +816,7 @@ Example of usage:
         t\_reply("480", "Temporarily Unavailable");
         exit;
     }
-
+    
     serialize\_branches(1);
     next\_branches(); # Pop the R-URI from the serialized branches set
 
@@ -931,7 +907,7 @@ Example of usage:
 
     # check if the "pstn" identifier (the "pstn" partition) from "drouting" module is ready (data is fully loaded)
     if (st\_check\_status( "drouting", "pstn") ) {}
-
+    
     # check if the all identifiers (all partitions) from "drouting" module are ready (data is fully loaded)
     if (st\_check\_status( "drouting", "all") ) {}
 
